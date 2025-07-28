@@ -1,14 +1,19 @@
+import random
+
 from PIL import Image, ImageDraw, ImageFont
-import constants
+import constants, ai
 
 img = Image.open(r".\map.png").convert("RGBA")
 draw = ImageDraw.Draw(img)
+fills = {}
 
+ai_answer = ai.ai_request() #Requesting information from AI
 
 for name, points in constants.countries.items():
     try:
-        info = constants.information[name]
-        color = constants.filling[info]
+        info = ai_answer[name]
+        fills[info] = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255), 255)
+        color = fills[info]
     except:
         info = ''
         # color = (255, 255, 255, 255)
