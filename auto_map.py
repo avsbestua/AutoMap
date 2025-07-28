@@ -29,6 +29,6 @@ for name, points in constants.countries.items():
 
     x,y = points[0]
 
-    draw.text((x,y), str(info), font=ImageFont.truetype(r"D:\PythonProject1\auto_map\BIPs.ttf", size), fill=(0, 0, 0, 255))
+    draw.text((x,y), str(info), font=ImageFont.truetype(r".\BIPs.ttf", size), fill=(0, 0, 0, 255))
 
 img.save(r".\img.png")
