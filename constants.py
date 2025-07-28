@@ -46,9 +46,9 @@ countries = {
 
 
 filling = {
-    "Apple":(20, 225, 255, 255),
+    "1":(20, 225, 255, 255),
 }
 
 information = {
-    'ukraine':"Apple"
+    'ukraine':"1"
 }
