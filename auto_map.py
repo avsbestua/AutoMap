@@ -1,7 +1,7 @@
 from PIL import Image, ImageDraw, ImageFont
 import constants
 
-img = Image.open(r"D:\PythonProject1\auto_map\map.png").convert("RGBA")
+img = Image.open(r".\map.png").convert("RGBA")
 draw = ImageDraw.Draw(img)
 
 
@@ -31,4 +31,4 @@ for name, points in constants.countries.items():
 
     draw.text((x,y), str(info), font=ImageFont.truetype(r"D:\PythonProject1\auto_map\BIPs.ttf", size), fill=(0, 0, 0, 255))
 
-img.save(r"D:\PythonProject1\auto_map\img.png")
+img.save(r".\img.png")
