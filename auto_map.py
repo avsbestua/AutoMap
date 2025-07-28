@@ -22,17 +22,39 @@ for name, points in constants.countries.items():
     for coord in points:
         ImageDraw.floodfill(img, xy=coord, value=color, thresh=200)
 
-    if name in ['luxembourg', 'cyprus', 'kosovo', 'slovenia']:
+    # if name in ['luxembourg', 'cyprus', 'kosovo', 'slovenia']:
+    #     continue #Next iteration if name in list
+    #
+    # if name in ['ukraine', 'poland', 'germany', 'france',
+    #             'spain', 'parasha', 'finland', 'sweden',
+    #             'turkey', 'romania','italy',]:
+    #     size = 60
+    # else:
+    #     size = 25
+    #
+    # x,y = points[0]
+
+    x, y = points[0]
+
+    if name in ['luxembourg', 'cyprus', 'kosovo',
+                'slovenia', 'montenegro']:
         continue #Next iteration if name in list
 
-    if name in ['ukraine', 'poland', 'germany', 'france',
-                'spain', 'parasha', 'finland', 'sweden',
-                'turkey', 'romania']:
-        size = 60
-    else:
-        size = 25
+    elif name in ['ukraine', 'poland', 'france',
+                'spain', 'finland',
+                'turkey', 'romania', 'italy']:
+        size = 35
+        x -= 15; y += 10
 
-    x,y = points[0]
+    elif name in ['parasha']:
+        size = 67
+
+    elif name in ['germany', 'sweden', 'united_kingdom',
+                  'belarus']:
+        x += 8
+        size = 25
+    else:
+        size = 15
 
     draw.text((x,y), str(info), font=ImageFont.truetype(r".\BIPs.ttf", size), fill=(0, 0, 0, 255))
 
