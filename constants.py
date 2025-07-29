@@ -1,5 +1,3 @@
-font_size = 20
-
 countries = {
     "ukraine": [(578, 400)],
     "poland": [(415, 370)],
@@ -37,7 +35,7 @@ countries = {
     "france": [(194, 497), (300, 615)],
     "luxembourg": [(256, 459)],
     "netherlands": [(242, 409)],
-    "united_kingdom": [(158, 395), (106, 345), (120, 276)],
+    "united_kingdom": [(148, 395), (106, 345), (120, 276)],
     "ireland": [(80, 362)],
     "iceland": [(47, 105)],
     "serbia": [(467, 547)],

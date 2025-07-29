@@ -1,11 +1,13 @@
 import requests
 import json
 
-API_KEY = "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"
 url = "https://openrouter.ai/api/v1/chat/completions"
 
 
 def ai_request():
+    with open("token.txt", 'r') as file:
+        API_KEY = file.read()
+
     headers = {
         "Authorization": f"Bearer {API_KEY}",
         "Content-Type": "application/json"
