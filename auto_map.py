@@ -5,8 +5,12 @@ img = Image.open(r".\map.png").convert("RGBA")
 draw = ImageDraw.Draw(img)
 
 ai_answer = ai.ai_request() #Requesting information from AI
+if constants.text_mode:
+    countries = constants.countries_text
+else:
+    countries = constants.countries
 
-for name, points in constants.countries.items():
+for name, points in countries.items():
     try:
         info = ai_answer[name]
         for (low_lim, high_lim), color_tup in constants.filling.items():
@@ -20,7 +24,7 @@ for name, points in constants.countries.items():
         continue
 
     for coord in points:
-        ImageDraw.floodfill(img, xy=coord, value=color, thresh=170)
+        ImageDraw.floodfill(img, xy=coord, value=color, thresh=140)
 
 
     x, y = points[0]
