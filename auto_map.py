@@ -21,10 +21,9 @@ for name, points in countries.items():
     except:
         color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255), 255)
 
-        continue
 
     for coord in points:
-        ImageDraw.floodfill(img, xy=coord, value=color, thresh=140)
+        ImageDraw.floodfill(img, xy=coord, value=color, thresh=5)
 
 
     x, y = points[0]
