@@ -9,10 +9,10 @@ ai_answer = ai.ai_request() #Requesting information from AI
 for name, points in constants.countries.items():
     try:
         info = ai_answer[name]
-        for (low_lim, high_lim), color in constants.filling.items():
+        for (low_lim, high_lim), color_tup in constants.filling.items():
             info = int(info)
             if low_lim <= info <= high_lim:
-                color = color
+                color = color_tup
 
     except:
         color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255), 255)
@@ -20,7 +20,7 @@ for name, points in constants.countries.items():
         continue
 
     for coord in points:
-        ImageDraw.floodfill(img, xy=coord, value=color, thresh=200)
+        ImageDraw.floodfill(img, xy=coord, value=color, thresh=170)
 
 
     x, y = points[0]
