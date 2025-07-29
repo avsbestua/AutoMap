@@ -31,11 +31,11 @@ for name, points in constants.countries.items():
 
     elif name in ['ukraine', 'poland', 'france',
                 'spain', 'finland',
-                'turkey', 'romania', 'italy']:
+                'turkey', 'romania', 'italy' ,'norway']:
         size = 35
         x -= 15; y += 10
 
-    elif name in ['rusia']:
+    elif name in ['russia']:
         size = 67
 
     elif name in ['germany', 'sweden', 'united_kingdom',
