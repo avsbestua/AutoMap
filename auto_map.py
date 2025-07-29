@@ -16,23 +16,12 @@ for name, points in constants.countries.items():
         color = fills[info]
     except:
         info = ''
-        # color = (255, 255, 255, 255)
+
         continue
 
     for coord in points:
         ImageDraw.floodfill(img, xy=coord, value=color, thresh=200)
 
-    # if name in ['luxembourg', 'cyprus', 'kosovo', 'slovenia']:
-    #     continue #Next iteration if name in list
-    #
-    # if name in ['ukraine', 'poland', 'germany', 'france',
-    #             'spain', 'parasha', 'finland', 'sweden',
-    #             'turkey', 'romania','italy',]:
-    #     size = 60
-    # else:
-    #     size = 25
-    #
-    # x,y = points[0]
 
     x, y = points[0]
 
