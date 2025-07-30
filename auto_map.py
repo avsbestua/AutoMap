@@ -24,7 +24,7 @@ for name, points in constants.countries.items():
 
 
     for coord in points:
-        ImageDraw.floodfill(img, xy=coord, value=color, thresh=5)
+        ImageDraw.floodfill(img, xy=coord, value=color, thresh=100)
 
 
     x, y = points[0]
@@ -35,17 +35,17 @@ for name, points in constants.countries.items():
 
     elif name in ['ukraine', 'poland', 'france',
                 'spain', 'finland',
-                'turkey', 'romania', 'italy' ,'norway']:
-        size = 35
-        x -= 15; y += 10
+                'turkey', 'romania', 'italy' ,'norway' , 'belarus' , 'sweden' , 'united_kingdom' , 'iceland' , 'germany']:
+        size = 75
+
 
     elif name in ['russia']:
-        size = 67
+        size = 120
 
-    elif name in ['germany', 'sweden', 'united_kingdom',
-                  'belarus']:
-        x += 8
-        size = 25
+    elif name in ['ireland', 'denmark', '',
+                  '']:
+        size = 50
+
     else:
         size = 15
 
