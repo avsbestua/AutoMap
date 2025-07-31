@@ -17,6 +17,7 @@ for name, points in constants.countries.items():
             info = int(info)
             if low_lim <= info <= high_lim:
                 color = color_tup
+                break
             else:
                 color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
 
