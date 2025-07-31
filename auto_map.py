@@ -33,6 +33,9 @@ for name, points in constants.countries.items():
 
     x, y = points[0]
 
+    if len(str(info)) >= 2:
+        x -= 20
+
     if name in ['luxembourg', 'cyprus', 'kosovo',
                 'slovenia', 'montenegro']:
         continue #Next iteration if name in list
