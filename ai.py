@@ -14,14 +14,15 @@ def ai_request():
     }
 
     data = {
-        "model": "moonshotai/kimi-k2:free",
+        "model": "openrouter/horizon-beta",
         "messages": [
-            {"role": "system", "content": "Ти помічник."},
-            {"role": "user", "content": """Заповни словник, де ключ — країна, а значення — чи є в цій країні 5G інтернет, маєш написати "Yes" або "No", або якщо в розробці то "Dev", ти маєш повернути JSON.
+            {"role": "system", "content": "You are an assistant. You must provide accurate answers and may use the internet to search for information."},
+            {"role": "user", "content": """Fill in a dictionary where the key is the number of airports in this country, you must write for example if 1000 write 1k.
+    Search the internet and return the result as JSON.
 
-    Якщо точних даних по країні немає, підстав середнє значення серед усіх інших.
+    If there is no exact data for a country, use the average value from all other countries.
 
-    Відповідь дай тільки у вигляді словника, без пояснень.
+    Provide the answer only as a dictionary, without explanations.
 
     {
         "ukraine":,
