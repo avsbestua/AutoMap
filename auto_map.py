@@ -22,10 +22,9 @@ for name, points in constants.countries.items():
                 color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
 
 
-        # color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
         # info = random.randint(0, 5)
     except:
-        pass
+        color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
 
 
     for coord in points:
