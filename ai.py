@@ -17,7 +17,7 @@ def ai_request():
         "model": "openrouter/horizon-beta",
         "messages": [
             {"role": "system", "content": "You are an assistant. You must provide accurate answers and may use the internet to search for information."},
-            {"role": "user", "content": """Fill in a dictionary where the key is the number of airports in this country, you must write for example if 1000 write 1k.
+            {"role": "user", "content": """Fill in a dictionary where the key is the number of WeChat users, you must write for example if 1000 write 1k, if 1 million, write 1m
     Search the internet and return the result as JSON.
 
     If there is no exact data for a country, use the average value from all other countries.
