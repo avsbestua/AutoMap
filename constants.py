@@ -40,6 +40,7 @@ countries = {
     "iceland": [(175 , 230)],
     "serbia": [(842,975)],
     "belgium": [(448 , 770)],
+    "usa": [( , )],
 }
 
 filling = {
