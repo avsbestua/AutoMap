@@ -1,7 +1,7 @@
 from PIL import Image, ImageDraw, ImageFont
 import constants, ai, random
 
-img = Image.open(r".\map2.png").convert("RGB")
+img = Image.open(r".\map.png").convert("RGBA")
 draw = ImageDraw.Draw(img)
 
 #ai_answer = ai.ai_request() #Requesting information from AI
@@ -19,13 +19,13 @@ for name, points in constants.countries.items():
                 color = color_tup
                 break
             else:
-                color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+                color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
 
 
         # info = random.randint(0, 5)
     except:
         info = random.randint(0, 10)
-        color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+        color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
 
 
     for coord in points:
