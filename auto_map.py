@@ -2,7 +2,7 @@ from PIL import Image, ImageDraw, ImageFont, ImageFilter
 import constants, ai, random
 
 img = Image.open(r".\map.png").convert("RGBA")
-img = img.filter(ImageFilter.GaussianBlur(radius=0.5))
+img = img.filter(ImageFilter.GaussianBlur(radius=0.9))
 draw = ImageDraw.Draw(img)
 
 #ai_answer = ai.ai_request() #Requesting information from AI
@@ -26,7 +26,7 @@ for name, points in constants.countries.items():
         # info = random.randint(0, 5)
     except:
         info = random.randint(0, 10)
-        color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+        color = (random.randint(80, 255), random.randint(80, 255), random.randint(80, 255), random.randint(80, 255))
 
 
     for coord in points:
