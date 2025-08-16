@@ -14,11 +14,11 @@ def ai_request():
     }
 
     data = {
-        "model": "z-ai/glm-4.5-air:free",
+        "model": "moonshotai/kimi-k2:free",
         "messages": [
             {"role": "system", "content": "You are an assistant. You must provide accurate answers and may use the internet to search for information."},
-            {"role": "user", "content": """Fill in a dictionary where the key is the number of Apple stores, you must write for example if 1000 write 1k, if 1 million, write 1m
-    Search the internet and return the result as JSON. IT MUST BE JSON format. Dont write 'json' in start
+            {"role": "user", "content": """Fill in a dictionary where the key is does Volodymyr Zeleskyi was in your country, write "Yes" or "No" you must write for example if 1000 write 1k, if 1 million, write 1m
+    Search the internet and return the result as JSON. IT MUST BE JSON format. Dont write anything else
 
     If there is no exact data for a country, use the average value from all other countries.
 
