@@ -45,20 +45,21 @@ for name, points in constants.countries.items():
     elif name in ['ukraine', 'poland', 'france',
                 'spain', 'finland',
                 'turkey', 'romania', 'italy' ,'norway' , 'belarus' , 'sweden' , 'united_kingdom' , 'iceland' , 'germany']:
-        size = 75
+        size = 175
 
 
     elif name in ['russia']:
         x -= 10
-        size = 120
+        size = 220
 
     elif name in ['ireland', 'denmark', 'belgium',
                   'netherlands', 'latvia', 'estonia', 'lithuania', 'czechia', 'slovakia', 'austria', 'hungary', 'switzerland' , 'bulgaria']:
-        size = 40
+        size = 140
 
     else:
-        size = 30
+        size = 125
 
     draw.text((x,y), str(info), font=ImageFont.truetype(r".\BIPs.ttf", size), fill=(0, 0, 0, 255))
 
+img = img.filter(ImageFilter.GaussianBlur(radius=0.5))
 img.save(r".\img.png")
