@@ -43,21 +43,21 @@ for name, points in constants.countries.items():
         continue #Next iteration if name in list
 
     elif name in ['ukraine', 'poland', 'france',
-                'spain', 'finland',
-                'turkey', 'romania', 'italy' ,'norway' , 'belarus' , 'sweden' , 'united_kingdom' , 'iceland' , 'germany']:
+                'spain',
+                'turkey', 'romania', 'italy'  , 'belarus'  , 'united_kingdom'  , 'germany']:
         size = 175
+    elif name in ['sweden', 'norway', 'finland']:
+        size = 100
 
+    elif name in ['russia','usa']:
+        y -= 10
+        size = 250
+    elif name in ['slovenia','latvia','lithuania','estonia','switzerland','austria','slovakia','hungary','croatia','netherlands','belgium','czechia','moldova','bosnia_and_herzegovina','serbia','bulgaria','albania','greece','ireland','iceland','norway','finland','sweden','denmark','portugal']:
+        size = 70
+    elif name in ['ireland', 'belgium'
+                  ,'estonia', 'lithuania', 'north_macedonia','switzerland','bosnia']:
+       y -= 25
 
-    elif name in ['russia']:
-        x -= 10
-        size = 220
-
-    elif name in ['ireland', 'denmark', 'belgium',
-                  'netherlands', 'latvia', 'estonia', 'lithuania', 'czechia', 'slovakia', 'austria', 'hungary', 'switzerland' , 'bulgaria']:
-        size = 140
-    elif name in ['ireland', 'united_kingdom', 'belgium',
-                  '', '', '', '', '', '', '', '', '' , '']:
-       y -= 20
     else:
         size = 125
 
