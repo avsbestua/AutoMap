@@ -38,7 +38,7 @@ for name, points in constants.countries.items():
         x -= 20
 
     if name in ['luxembourg', 'cyprus', 'kosovo',
-                'slovenia', 'montenegro']:
+                 'montenegro']:
         continue #Next iteration if name in list
 
     elif name in ['ukraine', 'poland', 'france',
