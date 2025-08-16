@@ -36,7 +36,7 @@ countries = {
     "luxembourg": [(1602 ,2647 )],
     "netherlands": [(1537 ,2418 )],
     "united_kingdom": [(1103 ,2336 ), (879 ,2040 ),],
-    "ireland": [(748 ,2168 )],
+    "ireland": [(748 ,2168 ),(813,1991)],
     "iceland": [(602 ,837 )],
     "serbia": [(2609,3147)],
     "belgium": [(1491 ,2539 )],

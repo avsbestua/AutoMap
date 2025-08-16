@@ -55,7 +55,9 @@ for name, points in constants.countries.items():
     elif name in ['ireland', 'denmark', 'belgium',
                   'netherlands', 'latvia', 'estonia', 'lithuania', 'czechia', 'slovakia', 'austria', 'hungary', 'switzerland' , 'bulgaria']:
         size = 140
-
+    elif name in ['ireland', 'united_kingdom', 'belgium',
+                  '', '', '', '', '', '', '', '', '' , '']:
+       y -= 20
     else:
         size = 125
 
