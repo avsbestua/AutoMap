@@ -5,7 +5,7 @@ url = "https://openrouter.ai/api/v1/chat/completions"
 
 
 def ai_request():
-    with open("token.txt", 'r') as file:
+    with open("tk.txt", 'r') as file:
         API_KEY = file.read()
 
     headers = {
