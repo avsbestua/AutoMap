@@ -1,7 +1,8 @@
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont, ImageFilter
 import constants, ai, random
 
 img = Image.open(r".\map.png").convert("RGBA")
+img = img.filter(ImageFilter.GaussianBlur(radius=0.5))
 draw = ImageDraw.Draw(img)
 
 #ai_answer = ai.ai_request() #Requesting information from AI
