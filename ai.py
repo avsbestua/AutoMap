@@ -1,5 +1,6 @@
-import requests
 import json
+
+import requests
 
 url = "https://openrouter.ai/api/v1/chat/completions"
 
@@ -16,9 +17,10 @@ def ai_request():
     data = {
         "model": "moonshotai/kimi-k2:free",
         "messages": [
-            {"role": "system", "content": "You are an assistant. You must provide accurate answers and may use the internet to search for information."},
-            {"role": "user", "content": """Fill in a dictionary where the key When did your country reach a GDP of one trillion?
-    Search the internet and return the result as JSON. IT MUST BE JSON format. Dont write 'json' in start
+            {"role": "system",
+             "content": "You are an assistant. You must provide accurate answers and may use the internet to search for information."},
+            {"role": "user", "content": """Fill in a dictionary where the key When did your country earned independence?
+    Search the internet and return the result as JSON. Dont write 'json' in start
 
     If there is no exact data for a country, use the average value from all other countries.
 

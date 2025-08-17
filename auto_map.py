@@ -1,67 +1,66 @@
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
-import constants, ai, random
+import ai
+import constants
+import random
 
-img = Image.open(r".\map.png").convert("RGBA")
+img = Image.open(r".\resources\map.png").convert("RGBA")
 img = img.filter(ImageFilter.GaussianBlur(radius=0.9))
 draw = ImageDraw.Draw(img)
 
 ai_answer = ai.ai_request() #Requesting information from AI
-# if constants.text_mode:
-#     countries = constants.countries_text
-# else:
-#     countries = constants.countries
 
 for name, points in constants.countries.items():
     try:
         info = ai_answer[name]
-        for (low_lim, high_lim), color_tup in constants.filling.items():
-            info = int(info)
-            if low_lim <= info <= high_lim:
+        for informaion, color_tup in constants.filling.items():
+            if informaion == str(info):
                 color = color_tup
                 break
             else:
-                color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
-
+                color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255), 255)
 
         # info = random.randint(0, 5)
     except:
-        # info = random.randint(0, 10)
-        color = (random.randint(80, 255), random.randint(80, 255), random.randint(80, 255), random.randint(80, 255))
 
+        color = (random.randint(80, 255), random.randint(80, 255), random.randint(80, 255), 255)
 
     for coord in points:
         ImageDraw.floodfill(img, xy=coord, value=color, thresh=50)
 
-
     x, y = points[0]
 
     if len(str(info)) >= 2:
-        x -= 20
+        x -= 30
+    elif len(str(info)) >= 4:
+        x -= 70
 
     if name in ['luxembourg', 'cyprus', 'kosovo',
-                 'montenegro']:
-        continue #Next iteration if name in list
+                'montenegro']:
+        continue  # Next iteration if name in list
 
     elif name in ['ukraine', 'poland', 'france',
-                'spain',
-                'turkey', 'romania', 'italy'  , 'belarus'  , 'united_kingdom'  , 'germany']:
+                  'spain',
+                  'turkey', 'romania', 'italy', 'belarus', 'united_kingdom', 'germany']:
         size = 175
     elif name in ['sweden', 'norway', 'finland']:
         size = 100
 
-    elif name in ['russia','usa']:
+    elif name in ['russia', 'usa']:
         y -= 10
         size = 250
-    elif name in ['slovenia','latvia','lithuania','estonia','switzerland','austria','slovakia','hungary','croatia','netherlands','belgium','czechia','moldova','bosnia_and_herzegovina','serbia','bulgaria','albania','greece','ireland','iceland','norway','finland','sweden','denmark','portugal']:
+    elif name in ['slovenia', 'latvia', 'lithuania', 'estonia', 'switzerland', 'austria', 'slovakia', 'hungary',
+                  'croatia', 'netherlands', 'belgium', 'czechia', 'moldova', 'bosnia_and_herzegovina', 'serbia',
+                  'bulgaria', 'albania', 'greece', 'ireland', 'iceland', 'norway', 'finland', 'sweden', 'denmark',
+                  'portugal']:
         size = 70
     elif name in ['ireland', 'belgium'
-                  ,'estonia', 'lithuania', 'north_macedonia','switzerland','bosnia']:
-       y -= 25
+        ,'estonia', 'lithuania', 'north_macedonia', 'switzerland', 'bosnia']:
+        y -= 25
 
     else:
         size = 125
 
-    draw.text((x,y), str(info), font=ImageFont.truetype(r".\BIPs.ttf", size), fill=(0, 0, 0, 255))
+    draw.text((x, y), str(info), font=ImageFont.truetype(r".\resources\font.ttf", size), fill=(0, 0, 0, 255))
 
 img = img.filter(ImageFilter.GaussianBlur(radius=0.5))
 img.save(r".\img.png")
