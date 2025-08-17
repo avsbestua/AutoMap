@@ -61,7 +61,12 @@ for name, points in constants.countries.items():
     else:
         size = 125
 
-    draw.text((x, y), str(info), font=ImageFont.truetype(r".\resources\font.ttf", size), fill=(0, 0, 0, 255))
+    draw.text((x, y),
+              str(info),
+              font=ImageFont.truetype(r".\resources\font.ttf", size),
+              fill=(255, 255, 255, 255),
+              stroke_width=10,
+              stroke_fill=(0, 0, 0, 255))
 
 img = img.filter(ImageFilter.GaussianBlur(radius=0.5))
 img.save(r".\img.png")
