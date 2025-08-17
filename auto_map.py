@@ -12,8 +12,9 @@ ai_answer = ai.ai_request() #Requesting information from AI
 for name, points in constants.countries.items():
     try:
         info = ai_answer[name]
-        for informaion, color_tup in constants.filling.items():
-            if informaion == str(info):
+        for (low_lim, high_lim), color_tup in constants.filling.items():
+            info = int(info)
+            if low_lim <= info <= high_lim:
                 color = color_tup
                 break
             else:
