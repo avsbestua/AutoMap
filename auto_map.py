@@ -2,8 +2,6 @@ from PIL import Image, ImageDraw, ImageFont, ImageFilter
 import ai
 import constants
 import random
-import cv2
-import numpy as np
 
 img = Image.open(r".\resources\test.png").convert("RGBA")
 
@@ -40,9 +38,12 @@ for name, points in constants.countries.items():
     elif len(info) >= 4:
         x -= 70
 
-    if name in ['luxembourg', 'cyprus', 'kosovo',
-                'montenegro']:
+    if name == 'luxembourg':
         continue  # Next iteration if name in list
+
+    elif name in ['cyprus', 'kosovo',
+                'montenegro'] and len(info) <= 2:
+        size = 30
 
     elif name in ['ukraine', 'poland', 'france',
                   'spain',
@@ -67,6 +68,7 @@ for name, points in constants.countries.items():
         size = 125
 
     if len(info) == 1:
+        y -= 20
         size += 25
 
     draw.text((x, y),
@@ -89,11 +91,16 @@ result = Image.alpha_composite(result, text_layer)
 borders = Image.open(r'resources/test.png').convert("RGBA") #Second borders layer
 borders = borders.resize(result.size)
 
-borders = np.array(borders)
+borders = borders.filter(ImageFilter.GaussianBlur(radius=15))
 
-borders = cv2.GaussianBlur(borders, (13, 13), sigmaX=16)
-borders = Image.fromarray(borders)
-borders.save("fwwffwf.png")
+pixels = borders.load()
+for x in range(borders.width):
+    for y in range(borders.height):
+        r, g, b, a = pixels[x, y]
+
+        if r != 0 and g != 0 and b != 0:
+            pixels[x, y] = (0, 0, 0, a if a == 0 else a+30)
+
 result = Image.alpha_composite(result, borders)
 
 result.save(r".\img.png")
