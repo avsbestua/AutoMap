@@ -20,9 +20,8 @@ for name, points in constants.countries.items():
             else:
                 color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255), 255)
 
-        # info = random.randint(0, 5)
-    except:
 
+    except:
         color = (random.randint(80, 255), random.randint(80, 255), random.randint(80, 255), 255)
 
     for coord in points:
@@ -30,9 +29,11 @@ for name, points in constants.countries.items():
 
     x, y = points[0]
 
-    if len(str(info)) >= 2:
+    info = str(info)
+
+    if len(info) >= 2:
         x -= 30
-    elif len(str(info)) >= 4:
+    elif len(info) >= 4:
         x -= 70
 
     if name in ['luxembourg', 'cyprus', 'kosovo',
@@ -61,11 +62,14 @@ for name, points in constants.countries.items():
     else:
         size = 125
 
+    if len(info) == 1:
+        size += 25
+
     draw.text((x, y),
-              str(info),
+              info,
               font=ImageFont.truetype(r".\resources\font.ttf", size),
               fill=(255, 255, 255, 255),
-              stroke_width=10,
+              stroke_width=15,
               stroke_fill=(0, 0, 0, 255))
 
 img = img.filter(ImageFilter.GaussianBlur(radius=0.5))
