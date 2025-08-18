@@ -16,13 +16,12 @@ def auto_map(prompt):
     for name, points in constants.countries.items():
         try:
             info = ai_answer[name]
-            for (low_lim, high_lim), color_tup in constants.filling.items():
-                info = int(info)
-                if low_lim <= info <= high_lim:
+            for informaion, color_tup in constants.filling.items():
+                if informaion == info:
                     color = color_tup
                     break
                 else:
-                    color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255), 255)
+                    color = (random.randint(80, 255), random.randint(80, 255), random.randint(80, 255), 255)
 
 
         except:
