@@ -20,8 +20,6 @@ def auto_map(prompt):
                 if informaion == info:
                     color = color_tup
                     break
-                else:
-                    color = (random.randint(80, 255), random.randint(80, 255), random.randint(80, 255), 255)
 
 
         except:
