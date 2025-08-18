@@ -14,17 +14,11 @@ def auto_map(prompt):
     print("Got information from AI")
 
     for name, points in constants.countries.items():
+        information_ai = str(ai_answer[name])
         try:
-            info = ai_answer[name]
-            for informaion, color_tup in constants.filling.items():
-                if informaion == info:
-                    color = color_tup
-                    break
-
-
-        except:
-            print("One missing color")
-            print(info)
+            color = constants.filling[information_ai]
+        except KeyError as e:
+            print(f"Color not found {information_ai} {e}")
             color = (random.randint(80, 255), random.randint(80, 255), random.randint(80, 255), 255)
 
         for coord in points:
@@ -32,7 +26,7 @@ def auto_map(prompt):
 
         x, y = points[0]
 
-        info = str(info)
+        info = str(information_ai)
 
         if len(info) >= 2:
             x -= 30
