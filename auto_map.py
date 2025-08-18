@@ -15,6 +15,7 @@ def auto_map(prompt):
 
     for name, points in constants.countries.items():
         try:
+            color = (random.randint(80, 255), random.randint(80, 255), random.randint(80, 255), 255)
             info = ai_answer[name]
             for (low_lim, high_lim), color_tup in constants.filling.items():
                 info = int(info)
