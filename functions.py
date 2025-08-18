@@ -5,10 +5,11 @@ import requests
 url = "https://openrouter.ai/api/v1/chat/completions"
 
 
-def ai_request():
+def ai_request(prompt):
     with open("tk.txt", 'r') as file:
         API_KEY = file.read()
 
+    print(prompt)
     headers = {
         "Authorization": f"Bearer {API_KEY}",
         "Content-Type": "application/json"
@@ -19,7 +20,7 @@ def ai_request():
         "messages": [
             {"role": "system",
              "content": "You are an assistant. You must provide accurate answers and may use the internet to search for information."},
-            {"role": "user", "content": """Fill in a dictionary where the key When did your country earned independence?
+            {"role": "user", "content": f"""Fill in a dictionary where the key """ + str(prompt) + """
     Search the internet and return the result as JSON. Dont write 'json' in start
 
     If there is no exact data for a country, use the average value from all other countries.
