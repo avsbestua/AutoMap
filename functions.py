@@ -69,6 +69,7 @@ def ai_request(prompt):
         "iceland":,
         "serbia":,
         "belgium":
+        "usa":
     }
     """}
         ],

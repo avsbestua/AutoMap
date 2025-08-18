@@ -21,13 +21,11 @@ def auto_map(prompt):
                 if low_lim <= info <= high_lim:
                     color = color_tup
                     break
-                else:
-                    color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255), 255)
 
 
         except:
             print("One missing color")
-            print(info)
+            print(info, name)
             color = (random.randint(80, 255), random.randint(80, 255), random.randint(80, 255), 255)
 
         for coord in points:
@@ -46,7 +44,7 @@ def auto_map(prompt):
             continue  # Next iteration if name in list
 
         elif name in ['cyprus', 'kosovo',
-                    'montenegro'] and len(info) <= 2:
+                    'montenegro']:
             size = 30
 
         elif name in ['ukraine', 'poland', 'france',
