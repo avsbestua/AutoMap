@@ -2,12 +2,15 @@ from PIL import Image, ImageDraw, ImageFont, ImageFilter
 import ai
 import constants
 import random
+import cv2
+import numpy as np
 
-img = Image.open(r".\resources\map.png").convert("RGBA")
-img = img.filter(ImageFilter.GaussianBlur(radius=0.9))
-draw = ImageDraw.Draw(img)
+img = Image.open(r".\resources\test.png").convert("RGBA")
 
-ai_answer = ai.ai_request() #Requesting information from AI
+text_layer = Image.new("RGBA", img.size, (255, 255, 255, 0))
+draw = ImageDraw.Draw(text_layer)
+
+#ai_answer = ai.ai_request() #Requesting information from AI
 
 for name, points in constants.countries.items():
     try:
@@ -22,6 +25,7 @@ for name, points in constants.countries.items():
 
 
     except:
+        info = random.randint(0, 10)
         color = (random.randint(80, 255), random.randint(80, 255), random.randint(80, 255), 255)
 
     for coord in points:
@@ -72,5 +76,24 @@ for name, points in constants.countries.items():
               stroke_width=15,
               stroke_fill=(0, 0, 0, 255))
 
-img = img.filter(ImageFilter.GaussianBlur(radius=0.5))
-img.save(r".\img.png")
+relief = Image.open(r"resources/map_relief.png").convert("RGBA")
+relief = relief.resize(img.size)
+
+r, g, b, a = relief.split()
+new_alpha = a.point(lambda p: int(p * 0.3))
+relief.putalpha(new_alpha)
+
+result = Image.alpha_composite(img, relief)
+result = Image.alpha_composite(result, text_layer)
+
+borders = Image.open(r'resources/test.png').convert("RGBA") #Second borders layer
+borders = borders.resize(result.size)
+
+borders = np.array(borders)
+
+borders = cv2.GaussianBlur(borders, (13, 13), sigmaX=16)
+borders = Image.fromarray(borders)
+borders.save("fwwffwf.png")
+result = Image.alpha_composite(result, borders)
+
+result.save(r".\img.png")
