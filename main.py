@@ -1,3 +1,3 @@
-from gui2 import App
+from gui import App
 
 App()

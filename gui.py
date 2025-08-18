@@ -1,34 +1,27 @@
+import threading
 import tkinter as tk
+from auto_map import auto_map
+import threading
+from tkinter.messagebox import showinfo
 
-root = tk.Tk()
-root.title("auto map")
-root.geometry("800x500")
-root["bg"] = "#F0EAD6"
+def map_(self): #Create threading for funtcion auto_map
+    showinfo("AutoMap", "AutoMap was launched, wait a few minutes!")
+    threading.Thread(target=auto_map, args=(self.entry.get(),), daemon=True).start()
 
-def action():
-    text = entry.get()
+class App:
+    def __init__(self):
+        root = tk.Tk()
+        root['bg'] = '#BCED09'
+        root.title("AutoMap")
+        root.geometry("+500+200")
+        root.resizable(width=False, height=True)
 
-entry = tk.Entry(root,font=("Arial Bold",50),width=5,)
-entry.place(x=550,y=200)
+        tk.Label(root, text="Welcome to AutoMap", font=("Aptos Semibold", 25), bg='#BCED09').pack()
 
+        self.entry = tk.Entry(root, font=("Aptos Bold", 25))
+        self.entry.pack(pady=5)
 
-title = tk.Label (root, text="welcome to auto map", font=("Arial Bold", 19),bg="#F0EAD6")
-title.place(x=270,y= 20)
+        button = tk.Button(root, text="Start AutoMap", font=("Aptos Bold", 25), bg='#F0CF65', command=lambda: map_(self))
+        button.pack(pady=5)
 
-
-
-label = tk.Label(root,  text="information",font=("Arial Bold",20),width=40,height=2,bg="#F0EAD6")
-label.place(x=300,y= 150)
-
-
-
-button = tk.Button(root,text="start",font=("Arial Bold",12),width=20,height=2)
-button.place(x=285,y =120)
-
-
-
-root.mainloop()
-
-
-
-
+        root.mainloop()
