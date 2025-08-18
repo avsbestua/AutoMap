@@ -43,6 +43,8 @@ countries = {
     "usa": [(1398, 629)],
 }
 
+GLOBAL_SIZE_MODIFIER = 0
+
 filling = {
     "1993": (235, 76, 66, 255),
     "1992": (19, 98, 7, 255),

@@ -71,6 +71,8 @@ for name, points in constants.countries.items():
         y -= 20
         size += 25
 
+    size += constants.GLOBAL_SIZE_MODIFIER #Global size modifier fot other fonts. Main font is BIPS
+
     draw.text((x, y),
               info,
               font=ImageFont.truetype(r".\resources\font.ttf", size),
