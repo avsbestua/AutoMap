@@ -4,10 +4,17 @@ import constants
 import random
 from tkinter.messagebox import showinfo
 
-def auto_map(prompt, var):
+def auto_map(prompt, var, map_var):
     mode = var.get() #AutoMap mode
-    print(f'Mode {mode}')
-    img = Image.open(r".\resources\test.png").convert("RGBA")
+    map_ = map_var.get()
+    print(f'Mode: {mode} Map: {map_}')
+
+    if map_ == "default":
+        path = r".\resources\test.png"
+    else:
+        path = r"resources/flag_map.png"
+
+    img = Image.open(path).convert("RGBA")
 
     text_layer = Image.new("RGBA", img.size, (255, 255, 255, 0))
     draw = ImageDraw.Draw(text_layer)
@@ -40,9 +47,10 @@ def auto_map(prompt, var):
                 print(f"Color not found {information_ai} {e}")
                 color = (random.randint(80, 255), random.randint(80, 255), random.randint(80, 255), 255)
 
+            if map_ == 'default':
+                for coord in points:
+                    ImageDraw.floodfill(img, xy=coord, value=color, thresh=50)
 
-        for coord in points:
-            ImageDraw.floodfill(img, xy=coord, value=color, thresh=50)
 
         x, y = points[0]
 
@@ -103,7 +111,6 @@ def auto_map(prompt, var):
     relief.putalpha(new_alpha)
 
     result = Image.alpha_composite(img, relief)
-    result = Image.alpha_composite(result, text_layer)
 
     borders = Image.open(r'resources/test.png').convert("RGBA") #Second borders layer
     borders = borders.resize(result.size)
@@ -119,6 +126,7 @@ def auto_map(prompt, var):
                 pixels[x, y] = (0, 0, 0, a if a == 0 else a+30)
 
     result = Image.alpha_composite(result, borders)
+    result = Image.alpha_composite(result, text_layer)
 
     result.save(r".\img.png")
     showinfo("AutoMap", "Your Map is ready!")
