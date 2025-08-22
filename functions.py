@@ -1,5 +1,4 @@
 import json
-
 import requests
 
 url = "https://openrouter.ai/api/v1/chat/completions"
@@ -76,19 +75,19 @@ def ai_request(prompt):
         "temperature": 0.5,
     }
 
-    # response = requests.post(url, headers=headers, json=data)
-    #
-    # if response.status_code == 200:
-    #     result = response.json()
-    #     res = result['choices'][0]['message']['content'].strip()
-    #     try:
-    #         # Пробуємо перетворити текст у словник
-    #         country_dict = json.loads(res)
-    #         return country_dict
-    #     except json.JSONDecodeError:
-    #         print("Не вдалося перетворити відповідь у словник.")
-    #         print("Отримана відповідь:", res)
-    #         return None
-    # else:
-    #     print(f"Помилка: {response.status_code} - {response.text}")
-    #     return None
+    response = requests.post(url, headers=headers, json=data)
+
+    if response.status_code == 200:
+        result = response.json()
+        res = result['choices'][0]['message']['content'].strip()
+        try:
+            # Пробуємо перетворити текст у словник
+            country_dict = json.loads(res)
+            return country_dict
+        except json.JSONDecodeError:
+            print("Failed to convert into dictionary")
+            print("Result:", res)
+            return None
+    else:
+        print(f"Error: {response.status_code} - {response.text}")
+        return None
