@@ -1,3 +1,3 @@
-from gui import App
+from map.gui import App
 
 App()
