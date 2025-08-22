@@ -5,12 +5,14 @@ import random
 from tkinter.messagebox import showinfo
 
 def auto_map(prompt, var, map_var):
+    random_colors = {}
+
     mode = var.get() #AutoMap mode
     map_ = map_var.get()
     print(f'Mode: {mode} Map: {map_}')
 
     if map_ == "default":
-        path = r".\resources\test.png"
+        path = r"resources/map.png"
     else:
         path = r"resources/flag_map.png"
 
@@ -33,10 +35,12 @@ def auto_map(prompt, var, map_var):
                     if low_lim <= info <= high_lim:
                         color = color_tup
                         break
-            except:
-                print("One missing color")
+            except KeyError as e:
+                print(f"One missing color {e}")
                 print(info, name)
                 color = (random.randint(80, 255), random.randint(80, 255), random.randint(80, 255), 255)
+                random_colors[info] = color
+
 
         elif mode == 'txt':
             '''Text mode'''
@@ -45,7 +49,12 @@ def auto_map(prompt, var, map_var):
                 color = constants.filling_txt[information_ai]
             except KeyError as e:
                 print(f"Color not found {information_ai} {e}")
-                color = (random.randint(80, 255), random.randint(80, 255), random.randint(80, 255), 255)
+                try:
+                    color = random_colors[information_ai]
+                    print(f"Color found in random {color}")
+                except KeyError:
+                    color = (random.randint(80, 255), random.randint(80, 255), random.randint(80, 255), 255)
+                    random_colors[information_ai] = color
 
             if map_ == 'default':
                 for coord in points:
@@ -65,8 +74,8 @@ def auto_map(prompt, var, map_var):
             continue  # Next iteration if name in list
 
         elif name in ['cyprus', 'kosovo',
-                    'montenegro'] and len(info) <= 2:
-            size = 30
+                    'montenegro']:
+            size = 70
 
         elif name in ['ukraine', 'poland', 'france',
                       'spain',
@@ -112,7 +121,7 @@ def auto_map(prompt, var, map_var):
 
     result = Image.alpha_composite(img, relief)
 
-    borders = Image.open(r'resources/test.png').convert("RGBA") #Second borders layer
+    borders = Image.open(r'resources/map.png').convert("RGBA") #Second borders layer
     borders = borders.resize(result.size)
 
     borders = borders.filter(ImageFilter.GaussianBlur(radius=15))
