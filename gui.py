@@ -13,7 +13,7 @@ class App:
         root = tk.Tk()
         root['bg'] = '#BCED09'
         root.title("AutoMap")
-        root.geometry("+500+200")
+        root.geometry("450x200+500+200")
         root.resizable(width=False, height=True)
 
         tk.Label(root, text="Welcome to AutoMap", font=("Aptos Semibold", 25), bg='#BCED09').pack()
