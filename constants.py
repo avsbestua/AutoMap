@@ -45,8 +45,12 @@ countries = {
 
 GLOBAL_SIZE_MODIFIER = 15
 
-filling = {
+filling_txt = {
     "No": (235, 40, 33, 255),
     "Yes": (80, 200, 120, 255),
     "Poland": (131, 137, 150, 255)
+}
+
+filling_num = {
+    (100, 200): (235, 40, 33, 255),
 }

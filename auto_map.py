@@ -4,7 +4,9 @@ import constants
 import random
 from tkinter.messagebox import showinfo
 
-def auto_map(prompt):
+def auto_map(prompt, var):
+    mode = var.get() #AutoMap mode
+    print(f'Mode {mode}')
     img = Image.open(r".\resources\test.png").convert("RGBA")
 
     text_layer = Image.new("RGBA", img.size, (255, 255, 255, 0))
@@ -14,12 +16,30 @@ def auto_map(prompt):
     print("Got information from AI")
 
     for name, points in constants.countries.items():
-        information_ai = str(ai_answer[name])
-        try:
-            color = constants.filling[information_ai]
-        except KeyError as e:
-            print(f"Color not found {information_ai} {e}")
-            color = (random.randint(80, 255), random.randint(80, 255), random.randint(80, 255), 255)
+        '''Number mode'''
+        if mode == 'num':
+            try:
+                color = (random.randint(80, 255), random.randint(80, 255), random.randint(80, 255), 255)
+                info = ai_answer[name]
+                for (low_lim, high_lim), color_tup in constants.filling_num.items():
+                    info = int(info)
+                    if low_lim <= info <= high_lim:
+                        color = color_tup
+                        break
+            except:
+                print("One missing color")
+                print(info, name)
+                color = (random.randint(80, 255), random.randint(80, 255), random.randint(80, 255), 255)
+
+        elif mode == 'txt':
+            '''Text mode'''
+            try:
+                information_ai = str(ai_answer[name])
+                color = constants.filling_txt[information_ai]
+            except KeyError as e:
+                print(f"Color not found {information_ai} {e}")
+                color = (random.randint(80, 255), random.randint(80, 255), random.randint(80, 255), 255)
+
 
         for coord in points:
             ImageDraw.floodfill(img, xy=coord, value=color, thresh=50)

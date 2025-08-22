@@ -73,22 +73,22 @@ def ai_request(prompt):
     }
     """}
         ],
-        "temperature": 0.7,
+        "temperature": 0.5,
     }
 
-    response = requests.post(url, headers=headers, json=data)
-
-    if response.status_code == 200:
-        result = response.json()
-        res = result['choices'][0]['message']['content'].strip()
-        try:
-            # Пробуємо перетворити текст у словник
-            country_dict = json.loads(res)
-            return country_dict
-        except json.JSONDecodeError:
-            print("Не вдалося перетворити відповідь у словник.")
-            print("Отримана відповідь:", res)
-            return None
-    else:
-        print(f"Помилка: {response.status_code} - {response.text}")
-        return None
+    # response = requests.post(url, headers=headers, json=data)
+    #
+    # if response.status_code == 200:
+    #     result = response.json()
+    #     res = result['choices'][0]['message']['content'].strip()
+    #     try:
+    #         # Пробуємо перетворити текст у словник
+    #         country_dict = json.loads(res)
+    #         return country_dict
+    #     except json.JSONDecodeError:
+    #         print("Не вдалося перетворити відповідь у словник.")
+    #         print("Отримана відповідь:", res)
+    #         return None
+    # else:
+    #     print(f"Помилка: {response.status_code} - {response.text}")
+    #     return None
