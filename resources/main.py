@@ -10,4 +10,4 @@ for x in range(img.width):
         if a < 255:
             pixels[x, y] = (r, g, b, 0)
 
-img.save("test.png")
+img.save("map.png")
