@@ -16,7 +16,7 @@ def video_edit(theme: str):
 
     text = TextClip(text=theme,
                     font= r'./font_video.ttf',
-                    font_size=100,
+                    font_size=90,
                     size=(bg.w - 100, None),
                     method='caption',
                     color='white',
@@ -52,4 +52,4 @@ def video_edit(theme: str):
     video = video.with_audio(music)
     video.write_videofile(f'{theme[:-1]}.mp4', codec='h264_nvenc')
 
-video_edit("When your country first joined the UN?")
+video_edit("When did your country ratify the Geneva Convention?")
