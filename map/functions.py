@@ -1,5 +1,4 @@
 import json
-
 import requests
 
 url = "https://openrouter.ai/api/v1/chat/completions"
