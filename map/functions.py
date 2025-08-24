@@ -16,7 +16,7 @@ def ai_request(prompt):
     }
 
     data = {
-        "model": "moonshotai/kimi-k2:free",
+        "model": "deepseek/deepseek-r1-0528:free", #moonshotai/kimi-k2:free
         "messages": [
             {"role": "system",
              "content": "You are an assistant. You must provide accurate answers and may use the internet to search for information."},
