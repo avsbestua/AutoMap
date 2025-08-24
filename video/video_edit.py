@@ -1,5 +1,5 @@
 from moviepy import VideoFileClip, TextClip, CompositeVideoClip, ImageClip, AudioFileClip
-
+from moviepy import vfx
 
 def video_edit(theme: str):
     bg = VideoFileClip('bg.mp4').with_duration(15)
@@ -26,12 +26,13 @@ def video_edit(theme: str):
                           method='caption',
                           ).with_duration(bg.duration).with_position(('center', bg.h - 160)).with_opacity(0.5)
 
-    stars = VideoFileClip('stars.mov', has_mask=True).with_duration(bg.duration).resized(0.2).with_position((140, 10))
+    stars = VideoFileClip('stars.mov', has_mask=True).with_duration(bg.duration).resized(0.22).with_position((135, 5))
     stars.with_position('top', 'center')
 
     map_img = ImageClip(r'../img.png').with_duration(bg.duration).with_position('center').resized(width=bg.w)
 
     subscribe = VideoFileClip('sub_button.mov', has_mask=True).with_position((-160, 115)).resized(0.25)
+    subscribe = subscribe.with_effects([vfx.MultiplySpeed(0.5)])
 
     video = CompositeVideoClip([bg, stars, text, map_img, water_mark, subscribe])
 
