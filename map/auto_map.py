@@ -56,7 +56,7 @@ def auto_map(prompt, var, map_var):
                 color = constants.filling_txt[information_ai]
             except Exception as e:
                 information_ai = random.randint(0, 5)
-                if map_ == 'default':
+                if map_ == 'default' or map_ == 'world':
                     print(f"Color not found {information_ai} {e}")
                     try:
                         color = random_colors[information_ai]
@@ -65,9 +65,9 @@ def auto_map(prompt, var, map_var):
                         color = (random.randint(80, 255), random.randint(80, 255), random.randint(80, 255), 255)
                         random_colors[information_ai] = color
 
-            if map_ == 'default' or map_ == 'world':
-                for coord in points:
-                    ImageDraw.floodfill(img, xy=coord, value=color, thresh=50)
+        if map_ == 'default' or map_ == 'world':
+            for coord in points:
+                ImageDraw.floodfill(img, xy=coord, value=color, thresh=50)
 
         x, y = points[0]
 
@@ -150,6 +150,7 @@ def auto_map(prompt, var, map_var):
 
         else:
 
+            size = 50
             size += constants.GLOBAL_SIZE_MODIFIER  # Global size modifier fot other fonts. Main font is BIPS
 
             draw.text((x, y),
@@ -158,6 +159,10 @@ def auto_map(prompt, var, map_var):
                       fill=(255, 255, 255, 255),
                       stroke_width=15,
                       stroke_fill=(0, 0, 0, 255))
+
+            result = Image.alpha_composite(img, text_layer)
+
+    result.save('img.png')
 
 
     showinfo("AutoMap", "Your Map is ready!")
