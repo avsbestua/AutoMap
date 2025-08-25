@@ -4,7 +4,7 @@ from tkinter.messagebox import showinfo, showerror
 from auto_map.map import auto_map
 
 
-def map_(entry_get, var, map_var):  # Create threading for funtcion auto_map
+def map_(entry_get, var, map_var):  # Create threading for function auto_map
     if not entry_get.strip():
         showerror("Error", "Write prompt for AI")
         return
@@ -50,7 +50,12 @@ class App:
 
         rd_flag_map = tk.Radiobutton(rd_frame_map, text="Flag map", variable=map_var, value='flag', bg="#BCED09",
                                      font=("Aptos Semibold", 15))
-        rd_flag_map.pack()
+        rd_flag_map.pack(side='left')
+
+        rd_world_map = tk.Radiobutton(rd_frame_map, text="World map", variable=map_var, value='world', bg="#BCED09",
+                                     font=("Aptos Semibold", 15))
+
+        rd_world_map.pack(side='left')
 
         button = tk.Button(root, text="Start AutoMap", font=("Aptos Bold", 25), bg='#F0CF65',
                            command=lambda: map_(entry.get(), var, map_var))

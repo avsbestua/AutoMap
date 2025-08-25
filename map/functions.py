@@ -3,30 +3,8 @@ import requests
 
 url = "https://openrouter.ai/api/v1/chat/completions"
 
+europe = """{
 
-def ai_request(prompt):
-    with open(r"./map/tk.txt", 'r') as file:
-        API_KEY = file.read()
-
-    print(prompt)
-    headers = {
-        "Authorization": f"Bearer {API_KEY}",
-        "Content-Type": "application/json"
-    }
-
-    data = {
-        "model": "deepseek/deepseek-r1-0528:free", #moonshotai/kimi-k2:free
-        "messages": [
-            {"role": "system",
-             "content": "You are an assistant. You must provide accurate answers and may use the internet to search for information."},
-            {"role": "user", "content": f"""Fill in a dictionary where the key """ + str(prompt) + """
-    Search the internet and return the result as JSON. Dont write 'json' in start
-
-    If there is no exact data for a country, use the average value from all other countries.
-
-    Provide the answer only as a dictionary, without explanations.
-
-    {
         "ukraine":,
         "poland":,
         "moldova":,
@@ -69,7 +47,46 @@ def ai_request(prompt):
         "serbia":,
         "belgium":,
         "usa":
+    }"""
+
+world ="""{
+
+        "asia":,
+        "europe":,
+        "australia":,
+        "north_america":,
+        "south_america":,
+        "africa":
+    }"""
+
+def ai_request(prompt, mode='europe'):
+    if mode == 'europe':
+        dict_ = europe
+    elif mode == 'world':
+        dict_ = world
+
+    with open(r"./map/tk.txt", 'r') as file:
+        API_KEY = file.read()
+
+    print(prompt)
+    headers = {
+        "Authorization": f"Bearer {API_KEY}",
+        "Content-Type": "application/json"
     }
+
+    data = {
+        "model": "deepseek/deepseek-r1-0528:free", #moonshotai/kimi-k2:free
+        "messages": [
+            {"role": "system",
+             "content": "You are an assistant. You must provide accurate answers and may use the internet to search for information."},
+            {"role": "user", "content": f"""Fill in a dictionary where the key """ + str(prompt) + f"""
+    Search the internet and return the result as JSON. Dont write 'json' in start
+
+    If there is no exact data for a country, use the average value from all other countries.
+
+    Provide the answer only as a dictionary, without explanations.
+
+    {dict_}
     """}
         ],
         "temperature": 0.5,

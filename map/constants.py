@@ -43,6 +43,12 @@ countries = {
     "usa": [(1398, 629)],
 }
 
+world_coords = {
+    "asia":[()],
+    "europe":[()],
+}
+
+
 GLOBAL_SIZE_MODIFIER = 15
 
 filling_txt = {
