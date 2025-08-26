@@ -68,6 +68,10 @@ def ai_request(prompt, mode='europe'):
     with open(r"./map/tk.txt", 'r') as file:
         API_KEY = file.read()
 
+    with open(r"./map/model.txt", 'r') as file:
+        AI_MODEL = file.read()
+
+
     print(prompt, dict_)
     headers = {
         "Authorization": f"Bearer {API_KEY}",
@@ -75,7 +79,7 @@ def ai_request(prompt, mode='europe'):
     }
 
     data = {
-        "model": "moonshotai/kimi-k2:free", #deepseek/deepseek-r1-0528:free
+        "model": f"{AI_MODEL}", #deepseek/deepseek-r1-0528:free
         "messages": [
             {"role": "system",
              "content": "You are an assistant. You must provide accurate answers and may use the internet to search for information."},
