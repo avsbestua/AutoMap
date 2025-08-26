@@ -60,7 +60,7 @@ world ="""{
     }"""
 
 def ai_request(prompt, mode='europe'):
-    if mode == 'europe' or mode == 'flag':
+    if mode == 'default' or mode == 'flag':
         dict_ = europe
     elif mode == 'world':
         dict_ = world
