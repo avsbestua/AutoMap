@@ -5,7 +5,9 @@ from . import constants
 from . import functions
 
 
+
 def auto_map(prompt, var, map_var):
+    last_country = False
     random_colors = {}
 
     mode = var.get()  # AutoMap mode
@@ -32,6 +34,8 @@ def auto_map(prompt, var, map_var):
 
 
     for name, points in dict_.items():
+        if name == 'usa' or name == 'north_america':
+            last_country = True
         '''Number mode'''
         if mode == 'num':
             try:
@@ -70,7 +74,10 @@ def auto_map(prompt, var, map_var):
 
         x, y = points[0]
 
-        info = str(info)
+        try:
+            info = str(info)
+        except UnboundLocalError:
+            print(f'No information for {name}')
 
         if map_ != 'world':
             if len(info) >= 2:
@@ -120,6 +127,22 @@ def auto_map(prompt, var, map_var):
                       stroke_width=15,
                       stroke_fill=(0, 0, 0, 255))
 
+
+        else:
+
+            size = 50
+            size += constants.GLOBAL_SIZE_MODIFIER  # Global size modifier fot other fonts. Main font is BIPS
+
+            draw.text((x, y),
+                      info,
+                      font=ImageFont.truetype(r"./resources/font.ttf", size),
+                      fill=(255, 255, 255, 255),
+                      stroke_width=15,
+                      stroke_fill=(0, 0, 0, 255))
+
+            result = Image.alpha_composite(img, text_layer)
+
+        if last_country: #IF last country, combining maps
             relief = Image.open(r"./resources/map_relief.png").convert("RGBA")
             relief = relief.resize(img.size)
 
@@ -146,22 +169,6 @@ def auto_map(prompt, var, map_var):
             result = Image.alpha_composite(result, text_layer)
 
             result.save(r".\img.png")
-
-        else:
-
-            size = 50
-            size += constants.GLOBAL_SIZE_MODIFIER  # Global size modifier fot other fonts. Main font is BIPS
-
-            draw.text((x, y),
-                      info,
-                      font=ImageFont.truetype(r"./resources/font.ttf", size),
-                      fill=(255, 255, 255, 255),
-                      stroke_width=15,
-                      stroke_fill=(0, 0, 0, 255))
-
-            result = Image.alpha_composite(img, text_layer)
-
-    result.save('img.png')
 
 
     showinfo("AutoMap", "Your Map is ready!")

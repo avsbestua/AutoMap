@@ -60,7 +60,7 @@ world ="""{
     }"""
 
 def ai_request(prompt, mode='europe'):
-    if mode == 'europe':
+    if mode == 'europe' or mode == 'flag':
         dict_ = europe
     elif mode == 'world':
         dict_ = world
@@ -72,7 +72,7 @@ def ai_request(prompt, mode='europe'):
         AI_MODEL = file.read()
 
 
-    print(prompt, dict_)
+    print(prompt)
     headers = {
         "Authorization": f"Bearer {API_KEY}",
         "Content-Type": "application/json"
@@ -104,7 +104,6 @@ def ai_request(prompt, mode='europe'):
         try:
             # Пробуємо перетворити текст у словник
             country_dict = json.loads(res)
-            print(country_dict)
             return country_dict
         except json.JSONDecodeError:
             print("Failed to convert into dictionary")
