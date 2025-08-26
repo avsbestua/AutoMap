@@ -4,7 +4,7 @@ from tkinter.messagebox import showinfo, showerror
 from auto_map.map import auto_map
 
 
-def map_(entry_get, var, map_var):  # Create threading for funtcion auto_map
+def map_(entry_get, var, map_var):  # Create threading for function auto_map
     if not entry_get.strip():
         showerror("Error", "Write prompt for AI")
         return
@@ -15,14 +15,15 @@ def map_(entry_get, var, map_var):  # Create threading for funtcion auto_map
 class App:
     def __init__(self):
         root = tk.Tk()
-        root['bg'] = '#BCED09'
+        root['bg'] = '#388E3C'
         root.title("AutoMap")
+        root.iconbitmap(r'resources/favicon.ico')
         root.geometry("450x250+500+200")
         root.resizable(width=False, height=False)
 
-        tk.Label(root, text="Welcome to AutoMap", font=("Aptos Semibold", 25), bg='#BCED09').pack()
+        tk.Label(root, text="Welcome to AutoMap", font=("Consolas Bold", 25), bg='#388E3C', fg='#ffffff').pack()
 
-        entry = tk.Entry(root, font=("Aptos Bold", 25))
+        entry = tk.Entry(root, font=("Consolas Bold", 25))
         entry.pack(pady=5)
 
         var = tk.StringVar()
@@ -31,12 +32,12 @@ class App:
         rd_frame_mode = tk.Frame(root)  # Frame for radio buttons
         rd_frame_mode.pack()
 
-        rd1 = tk.Radiobutton(rd_frame_mode, text="Text mode", variable=var, value="txt", bg="#BCED09",
-                             font=("Aptos Semibold", 15))
+        rd1 = tk.Radiobutton(rd_frame_mode, text="Text mode", variable=var, value="txt", bg="#388E3C", fg='#ffffff',
+                             font=("Consolas Bold", 15))
         rd1.pack(side='left')
 
-        rd2 = tk.Radiobutton(rd_frame_mode, text="Number mode", variable=var, value="num", bg="#BCED09",
-                             font=("Aptos Semibold", 15))
+        rd2 = tk.Radiobutton(rd_frame_mode, text="Number mode", variable=var, value="num", bg="#388E3C", fg='#ffffff',
+                             font=("Consolas Bold", 15))
         rd2.pack()
 
         map_var = tk.StringVar()  # Map variable
@@ -44,15 +45,20 @@ class App:
         rd_frame_map = tk.Frame(root)
         rd_frame_map.pack()
 
-        rd_def_map = tk.Radiobutton(rd_frame_map, text="Default map", variable=map_var, value="default", bg="#BCED09",
-                                    font=("Aptos Semibold", 15))
+        rd_def_map = tk.Radiobutton(rd_frame_map, text="Default map", variable=map_var, value="default", bg="#388E3C", fg='#ffffff',
+                                    font=("Consolas Bold", 15))
         rd_def_map.pack(side='left')
 
-        rd_flag_map = tk.Radiobutton(rd_frame_map, text="Flag map", variable=map_var, value='flag', bg="#BCED09",
-                                     font=("Aptos Semibold", 15))
-        rd_flag_map.pack()
+        rd_flag_map = tk.Radiobutton(rd_frame_map, text="Flag map", variable=map_var, value='flag', bg="#388E3C", fg='#ffffff',
+                                     font=("Consolas Bold", 15))
+        rd_flag_map.pack(side='left')
 
-        button = tk.Button(root, text="Start AutoMap", font=("Aptos Bold", 25), bg='#F0CF65',
+        rd_world_map = tk.Radiobutton(rd_frame_map, text="World map", variable=map_var, value='world', bg="#388E3C", fg='#ffffff',
+                                     font=("Consolas Bold", 15))
+
+        rd_world_map.pack(side='left')
+
+        button = tk.Button(root, text="Start AutoMap", font=("Consolas Bold", 25), bg='#8BC34A', fg='#ffffff',
                            command=lambda: map_(entry.get(), var, map_var))
         button.pack(pady=5)
 
