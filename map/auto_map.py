@@ -7,7 +7,6 @@ from . import functions
 
 
 def auto_map(prompt, var, map_var):
-    last_country = False
     random_colors = {}
 
     mode = var.get()  # AutoMap mode
@@ -34,8 +33,6 @@ def auto_map(prompt, var, map_var):
 
 
     for name, points in dict_.items():
-        if name == 'usa' or name == 'north_america':
-            last_country = True
         '''Number mode'''
         if mode == 'num':
             try:
@@ -140,35 +137,37 @@ def auto_map(prompt, var, map_var):
                       stroke_width=15,
                       stroke_fill=(0, 0, 0, 255))
 
-            result = Image.alpha_composite(img, text_layer)
 
-        if last_country: #IF last country, combining maps
-            relief = Image.open(r"./resources/map_relief.png").convert("RGBA")
-            relief = relief.resize(img.size)
 
-            r, g, b, a = relief.split()
-            new_alpha = a.point(lambda p: int(p * 0.3))
-            relief.putalpha(new_alpha)
+    if map_ in ['default', 'flag']:
+        relief = Image.open(r"./resources/map_relief.png").convert("RGBA")
+        relief = relief.resize(img.size)
 
-            result = Image.alpha_composite(img, relief)
+        r, g, b, a = relief.split()
+        new_alpha = a.point(lambda p: int(p * 0.3))
+        relief.putalpha(new_alpha)
 
-            borders = Image.open(r'./resources/map.png').convert("RGBA")  # Second borders layer
-            borders = borders.resize(result.size)
+        result = Image.alpha_composite(img, relief)
 
-            borders = borders.filter(ImageFilter.GaussianBlur(radius=15))
+        borders = Image.open(r'./resources/map.png').convert("RGBA")  # Second borders layer
+        borders = borders.resize(result.size)
 
-            pixels = borders.load()
-            for x in range(borders.width):
-                for y in range(borders.height):
-                    r, g, b, a = pixels[x, y]
+        borders = borders.filter(ImageFilter.GaussianBlur(radius=15))
 
-                    if r != 0 and g != 0 and b != 0:
-                        pixels[x, y] = (0, 0, 0, a if a == 0 else a + 30)
+        pixels = borders.load()
+        for x in range(borders.width):
+            for y in range(borders.height):
+                r, g, b, a = pixels[x, y]
 
-            result = Image.alpha_composite(result, borders)
-            result = Image.alpha_composite(result, text_layer)
+                if r != 0 and g != 0 and b != 0:
+                    pixels[x, y] = (0, 0, 0, a if a == 0 else a + 30)
 
-            result.save(r".\img.png")
+        result = Image.alpha_composite(result, borders)
+        result = Image.alpha_composite(result, text_layer)
+
+    elif map_ == 'world':
+        result = Image.alpha_composite(img, text_layer)
 
 
     showinfo("AutoMap", "Your Map is ready!")
+    result.save(r".\img.png")
