@@ -27,7 +27,7 @@ def auto_map(prompt, var, map_var):
     text_layer = Image.new("RGBA", img.size, (255, 255, 255, 0))
     draw = ImageDraw.Draw(text_layer)
 
-    #ai_answer = functions.ai_request(prompt)  # Requesting information from AI
+    ai_answer = functions.ai_request(prompt, map_var.get())  # Requesting information from AI
     print("Got information from AI")
 
 
@@ -52,18 +52,17 @@ def auto_map(prompt, var, map_var):
         elif mode == 'txt':
             '''Text mode'''
             try:
-                information_ai = str(ai_answer[name])
-                color = constants.filling_txt[information_ai]
+                info = str(ai_answer[name])
+                color = constants.filling_txt[info]
             except Exception as e:
-                information_ai = random.randint(0, 5)
                 if map_ == 'default' or map_ == 'world':
-                    print(f"Color not found {information_ai} {e}")
+                    print(f"Color not found {info} {e}")
                     try:
-                        color = random_colors[information_ai]
+                        color = random_colors[info]
                         print(f"Color found in random {color}")
                     except KeyError:
                         color = (random.randint(80, 255), random.randint(80, 255), random.randint(80, 255), 255)
-                        random_colors[information_ai] = color
+                        random_colors[info] = color
 
         if map_ == 'default' or map_ == 'world':
             for coord in points:
@@ -71,7 +70,7 @@ def auto_map(prompt, var, map_var):
 
         x, y = points[0]
 
-        info = str(information_ai)
+        info = str(info)
 
         if map_ != 'world':
             if len(info) >= 2:

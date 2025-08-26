@@ -68,21 +68,21 @@ def ai_request(prompt, mode='europe'):
     with open(r"./map/tk.txt", 'r') as file:
         API_KEY = file.read()
 
-    print(prompt)
+    print(prompt, dict_)
     headers = {
         "Authorization": f"Bearer {API_KEY}",
         "Content-Type": "application/json"
     }
 
     data = {
-        "model": "deepseek/deepseek-r1-0528:free", #moonshotai/kimi-k2:free
+        "model": "moonshotai/kimi-k2:free", #deepseek/deepseek-r1-0528:free
         "messages": [
             {"role": "system",
              "content": "You are an assistant. You must provide accurate answers and may use the internet to search for information."},
             {"role": "user", "content": f"""Fill in a dictionary where the key """ + str(prompt) + f"""
     Search the internet and return the result as JSON. Dont write 'json' in start
 
-    If there is no exact data for a country, use the average value from all other countries.
+    If there is no exact data for a country or continent, use the average value from all other countries.
 
     Provide the answer only as a dictionary, without explanations.
 
@@ -100,6 +100,7 @@ def ai_request(prompt, mode='europe'):
         try:
             # Пробуємо перетворити текст у словник
             country_dict = json.loads(res)
+            print(country_dict)
             return country_dict
         except json.JSONDecodeError:
             print("Failed to convert into dictionary")
