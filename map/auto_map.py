@@ -75,8 +75,9 @@ def auto_map(prompt, var, map_var):
             info = str(info)
         except UnboundLocalError:
             print(f'No information for {name}')
+            continue
 
-        if map_ != 'world':
+        if map_ == 'flag' or map_ == 'default':
             if len(info) >= 2:
                 x -= 30
             elif len(info) >= 4:
