@@ -5,6 +5,7 @@ from . import constants
 from . import functions
 
 
+
 def auto_map(prompt, var, map_var):
     random_colors = {}
 
@@ -70,9 +71,13 @@ def auto_map(prompt, var, map_var):
 
         x, y = points[0]
 
-        info = str(info)
+        try:
+            info = str(info)
+        except UnboundLocalError:
+            print(f'No information for {name}')
+            continue
 
-        if map_ != 'world':
+        if map_ == 'flag' or map_ == 'default':
             if len(info) >= 2:
                 x -= 30
             elif len(info) >= 4:
@@ -120,32 +125,6 @@ def auto_map(prompt, var, map_var):
                       stroke_width=15,
                       stroke_fill=(0, 0, 0, 255))
 
-            relief = Image.open(r"./resources/map_relief.png").convert("RGBA")
-            relief = relief.resize(img.size)
-
-            r, g, b, a = relief.split()
-            new_alpha = a.point(lambda p: int(p * 0.3))
-            relief.putalpha(new_alpha)
-
-            result = Image.alpha_composite(img, relief)
-
-            borders = Image.open(r'./resources/map.png').convert("RGBA")  # Second borders layer
-            borders = borders.resize(result.size)
-
-            borders = borders.filter(ImageFilter.GaussianBlur(radius=15))
-
-            pixels = borders.load()
-            for x in range(borders.width):
-                for y in range(borders.height):
-                    r, g, b, a = pixels[x, y]
-
-                    if r != 0 and g != 0 and b != 0:
-                        pixels[x, y] = (0, 0, 0, a if a == 0 else a + 30)
-
-            result = Image.alpha_composite(result, borders)
-            result = Image.alpha_composite(result, text_layer)
-
-            result.save(r".\img.png")
 
         else:
 
@@ -159,9 +138,37 @@ def auto_map(prompt, var, map_var):
                       stroke_width=15,
                       stroke_fill=(0, 0, 0, 255))
 
-            result = Image.alpha_composite(img, text_layer)
 
-    result.save('img.png')
+
+    if map_ in ['default', 'flag']:
+        relief = Image.open(r"./resources/map_relief.png").convert("RGBA")
+        relief = relief.resize(img.size)
+
+        r, g, b, a = relief.split()
+        new_alpha = a.point(lambda p: int(p * 0.3))
+        relief.putalpha(new_alpha)
+
+        result = Image.alpha_composite(img, relief)
+
+        borders = Image.open(r'./resources/map.png').convert("RGBA")  # Second borders layer
+        borders = borders.resize(result.size)
+
+        borders = borders.filter(ImageFilter.GaussianBlur(radius=15))
+
+        pixels = borders.load()
+        for x in range(borders.width):
+            for y in range(borders.height):
+                r, g, b, a = pixels[x, y]
+
+                if r != 0 and g != 0 and b != 0:
+                    pixels[x, y] = (0, 0, 0, a if a == 0 else a + 30)
+
+        result = Image.alpha_composite(result, borders)
+        result = Image.alpha_composite(result, text_layer)
+
+    elif map_ == 'world':
+        result = Image.alpha_composite(img, text_layer)
 
 
     showinfo("AutoMap", "Your Map is ready!")
+    result.save(r".\img.png")

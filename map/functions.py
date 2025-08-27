@@ -59,8 +59,8 @@ world ="""{
         "africa":
     }"""
 
-def ai_request(prompt, mode='europe'):
-    if mode == 'europe':
+def ai_request(prompt, mode):
+    if mode == 'default' or mode == 'flag':
         dict_ = europe
     elif mode == 'world':
         dict_ = world
@@ -68,14 +68,18 @@ def ai_request(prompt, mode='europe'):
     with open(r"./map/tk.txt", 'r') as file:
         API_KEY = file.read()
 
-    print(prompt, dict_)
+    with open(r"./map/model.txt", 'r') as file:
+        AI_MODEL = file.read()
+
+
+    print(prompt)
     headers = {
         "Authorization": f"Bearer {API_KEY}",
         "Content-Type": "application/json"
     }
 
     data = {
-        "model": "moonshotai/kimi-k2:free", #deepseek/deepseek-r1-0528:free
+        "model": f"{AI_MODEL}", #deepseek/deepseek-r1-0528:free
         "messages": [
             {"role": "system",
              "content": "You are an assistant. You must provide accurate answers and may use the internet to search for information."},
@@ -100,7 +104,6 @@ def ai_request(prompt, mode='europe'):
         try:
             # Пробуємо перетворити текст у словник
             country_dict = json.loads(res)
-            print(country_dict)
             return country_dict
         except json.JSONDecodeError:
             print("Failed to convert into dictionary")
