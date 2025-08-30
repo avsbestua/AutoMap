@@ -30,7 +30,16 @@ def auto_map(prompt, var, map_var):
 
     ai_answer = functions.ai_request(prompt, map_var.get())  # Requesting information from AI
     print("Got information from AI")
+    '''Writing the most and the least country'''
+    most_country = max(ai_answer, key=ai_answer.get)
+    least_country = min(ai_answer, key=ai_answer.get)
 
+    draw.text((106, 1240),
+              f'Most: {most_country.capitalize()}\nLeast: {least_country.capitalize()}',
+              font=ImageFont.truetype(r"./resources/font.ttf", 150),
+              fill=(255, 255, 255, 255),
+              stroke_width=15,
+              stroke_fill=(0, 0, 0, 255))
 
     for name, points in dict_.items():
         '''Number mode'''

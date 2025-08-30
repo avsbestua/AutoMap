@@ -59,7 +59,7 @@ world ="""{
         "africa":
     }"""
 
-def ai_request(prompt, mode):
+def ai_request(prompt: str, mode: str) -> dict:
     if mode == 'default' or mode == 'flag':
         dict_ = europe
     elif mode == 'world':
