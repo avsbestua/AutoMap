@@ -1,4 +1,5 @@
 import random
+import winsound
 from tkinter.messagebox import showinfo
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 from . import constants
@@ -178,6 +179,6 @@ def auto_map(prompt, var, map_var):
     elif map_ == 'world':
         result = Image.alpha_composite(img, text_layer)
 
-
-    showinfo("AutoMap", "Your Map is ready!")
     result.save(r".\img.png")
+    winsound.Beep(750, 600)
+    result.show("Map")
