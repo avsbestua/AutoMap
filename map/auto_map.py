@@ -1,6 +1,5 @@
 import random
 import winsound
-from tkinter.messagebox import showinfo
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 from . import constants
 from . import functions
