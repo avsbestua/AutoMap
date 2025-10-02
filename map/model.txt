@@ -1,1 +1,1 @@
-moonshotai/kimi-k2:free
+x-ai/grok-4-fast:free
