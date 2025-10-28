@@ -4,7 +4,7 @@ from PIL import Image, ImageDraw, ImageFont, ImageFilter
 from . import constants
 from . import functions
 
-
+need_most_least = False
 
 def auto_map(prompt, var, map_var):
     random_colors = {}
@@ -26,7 +26,9 @@ def auto_map(prompt, var, map_var):
     img = Image.open(path).convert("RGBA")
 
     text_layer = Image.new("RGBA", img.size, (255, 255, 255, 0))
+    most_least = Image.new("RGBA", img.size, (255, 255, 255, 0)) #Layer for most and least
     draw = ImageDraw.Draw(text_layer)
+    ml_draw = ImageDraw.Draw(most_least)
 
     ai_answer = functions.ai_request(prompt, map_var.get())  # Requesting information from AI
     print("Got information from AI")
@@ -34,7 +36,7 @@ def auto_map(prompt, var, map_var):
     most_country = max(ai_answer, key=ai_answer.get)
     least_country = min(ai_answer, key=ai_answer.get)
 
-    draw.text((106, 1240),
+    ml_draw.text((106, 1240),
               f'Most: {most_country.capitalize()}\nLeast: {least_country.capitalize()}',
               font=ImageFont.truetype(r"./resources/font.ttf", 150),
               fill=(255, 255, 255, 255),
@@ -174,6 +176,9 @@ def auto_map(prompt, var, map_var):
 
         result = Image.alpha_composite(result, borders)
         result = Image.alpha_composite(result, text_layer)
+
+        if need_most_least:
+            result = Image.alpha_composite(result, most_least)
 
     elif map_ == 'world':
         result = Image.alpha_composite(img, text_layer)
