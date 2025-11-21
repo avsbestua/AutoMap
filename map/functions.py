@@ -2,7 +2,7 @@ import json
 import requests
 
 url = "https://openrouter.ai/api/v1/chat/completions"
-
+# Europe countries dictionary
 europe = """{
 
         "ukraine":,
@@ -48,7 +48,7 @@ europe = """{
         "belgium":,
         "usa":
     }"""
-
+# Continents dictionary
 world ="""{
 
         "asia":,
@@ -59,15 +59,16 @@ world ="""{
         "africa":
     }"""
 
+# mode selecting
 def ai_request(prompt: str, mode: str) -> dict:
     if mode == 'default' or mode == 'flag':
         dict_ = europe
     elif mode == 'world':
         dict_ = world
-
+# reading token from file
     with open(r"./map/tk.txt", 'r') as file:
         API_KEY = file.read()
-
+# reading model from file
     with open(r"./map/model.txt", 'r') as file:
         AI_MODEL = file.read()
 
@@ -77,7 +78,7 @@ def ai_request(prompt: str, mode: str) -> dict:
         "Authorization": f"Bearer {API_KEY}",
         "Content-Type": "application/json"
     }
-
+# request data
     data = {
         "model": f"{AI_MODEL}", #deepseek/deepseek-r1-0528:free
         "messages": [
@@ -95,14 +96,14 @@ def ai_request(prompt: str, mode: str) -> dict:
         ],
         "temperature": 0.5,
     }
-
+# request
     response = requests.post(url, headers=headers, json=data)
 
     if response.status_code == 200:
         result = response.json()
         res = result['choices'][0]['message']['content'].strip()
         try:
-            # Пробуємо перетворити текст у словник
+# trying to parse dictionary
             country_dict = json.loads(res)
             return country_dict
         except json.JSONDecodeError:

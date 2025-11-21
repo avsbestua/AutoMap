@@ -12,7 +12,7 @@ def auto_map(prompt, var, map_var):
     mode = var.get()  # AutoMap mode
     map_ = map_var.get()
     print(f'Mode: {mode} Map: {map_}')
-
+# map selecting
     if map_ == "default":
         path = r"./resources/map.png"
         dict_ = constants.countries
@@ -22,15 +22,16 @@ def auto_map(prompt, var, map_var):
     else:
         path = r"./resources/world_map.png"
         dict_ = constants.world_coords
-
+# opening selected map
     img = Image.open(path).convert("RGBA")
 
     text_layer = Image.new("RGBA", img.size, (255, 255, 255, 0))
-    most_least = Image.new("RGBA", img.size, (255, 255, 255, 0)) #Layer for most and least
+ # Layer for most and least
+    most_least = Image.new("RGBA", img.size, (255, 255, 255, 0))
     draw = ImageDraw.Draw(text_layer)
     ml_draw = ImageDraw.Draw(most_least)
-
-    ai_answer = functions.ai_request(prompt, map_var.get())  # Requesting information from AI
+# Requesting information from AI
+    ai_answer = functions.ai_request(prompt, map_var.get())
     print("Got information from AI")
     '''Writing the most and the least country'''
     most_country = max(ai_answer, key=ai_answer.get)
@@ -75,7 +76,7 @@ def auto_map(prompt, var, map_var):
                     except KeyError:
                         color = (random.randint(80, 255), random.randint(80, 255), random.randint(80, 255), 255)
                         random_colors[info] = color
-
+# filling
         if map_ == 'default' or map_ == 'world':
             for coord in points:
                 ImageDraw.floodfill(img, xy=coord, value=color, thresh=50)
@@ -93,7 +94,7 @@ def auto_map(prompt, var, map_var):
                 x -= 30
             elif len(info) >= 4:
                 x -= 70
-
+# number in countries
             if name == 'luxembourg':
                 continue  # Next iteration if name in list
 
@@ -150,7 +151,7 @@ def auto_map(prompt, var, map_var):
                       stroke_fill=(0, 0, 0, 255))
 
 
-
+# adding relief map
     if map_ in ['default', 'flag']:
         relief = Image.open(r"./resources/map_relief.png").convert("RGBA")
         relief = relief.resize(img.size)
@@ -179,7 +180,7 @@ def auto_map(prompt, var, map_var):
 
         if need_most_least:
             result = Image.alpha_composite(result, most_least)
-
+# merging layers
     elif map_ == 'world':
         result = Image.alpha_composite(img, text_layer)
 
