@@ -1,8 +1,9 @@
 import json
 import requests
+from tkinter.messagebox import showerror
 
 url = "https://openrouter.ai/api/v1/chat/completions"
-
+# Europe countries dictionary
 europe = """{
 
         "ukraine":,
@@ -48,7 +49,7 @@ europe = """{
         "belgium":,
         "usa":
     }"""
-
+# Continents dictionary
 world ="""{
 
         "asia":,
@@ -59,15 +60,16 @@ world ="""{
         "africa":
     }"""
 
-def ai_request(prompt, mode):
+# mode selecting
+def ai_request(prompt: str, mode: str) -> dict:
     if mode == 'default' or mode == 'flag':
         dict_ = europe
     elif mode == 'world':
         dict_ = world
-
+# reading token from file 
     with open(r"./map/tk.txt", 'r') as file:
         API_KEY = file.read()
-
+# reading model from file @TODO Make entry in GUI
     with open(r"./map/model.txt", 'r') as file:
         AI_MODEL = file.read()
 
@@ -77,12 +79,12 @@ def ai_request(prompt, mode):
         "Authorization": f"Bearer {API_KEY}",
         "Content-Type": "application/json"
     }
-
+# request data
     data = {
         "model": f"{AI_MODEL}", #deepseek/deepseek-r1-0528:free
         "messages": [
             {"role": "system",
-             "content": "You are an assistant. You must provide accurate answers and may use the internet to search for information."},
+             "content": "You are cartographer. You must provide accurate information about countries or continents and may use the internet to search for information."},
             {"role": "user", "content": f"""Fill in a dictionary where the key """ + str(prompt) + f"""
     Search the internet and return the result as JSON. Dont write 'json' in start
 
@@ -93,16 +95,16 @@ def ai_request(prompt, mode):
     {dict_}
     """}
         ],
-        "temperature": 0.5,
+        "temperature": 0.8,
     }
-
+# request
     response = requests.post(url, headers=headers, json=data)
 
     if response.status_code == 200:
         result = response.json()
         res = result['choices'][0]['message']['content'].strip()
         try:
-            # Пробуємо перетворити текст у словник
+# trying to parse dictionary
             country_dict = json.loads(res)
             return country_dict
         except json.JSONDecodeError:
@@ -111,4 +113,5 @@ def ai_request(prompt, mode):
             return None
     else:
         print(f"Error: {response.status_code} - {response.text}")
+        
         return None

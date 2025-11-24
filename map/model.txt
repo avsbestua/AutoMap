@@ -1,1 +1,1 @@
-moonshotai/kimi-k2:free
+openrouter/andromeda-alpha
