@@ -20,7 +20,7 @@ elif sys.platform == 'darwin':
 # Flag to show most and least country on map image @TODO Make flag in GUI
 need_most_least = False
 
-def auto_map(prompt, var, map_var):
+def auto_map(prompt, var, map_var, size_mod):
     random_colors = {}
 
     mode = var.get()  # AutoMap mode (text/number)
@@ -142,7 +142,7 @@ def auto_map(prompt, var, map_var):
                 y -= 20
                 size += 25
 
-            size += constants.GLOBAL_SIZE_MODIFIER  # Global size modifier fot other fonts. Main font is BIPS
+            size += size_mod  # Global size modifier fot other fonts. Main font is BIPS
 
             draw.text((x, y),
                       info,
@@ -155,7 +155,7 @@ def auto_map(prompt, var, map_var):
         else:
 
             size = 50
-            size += constants.GLOBAL_SIZE_MODIFIER  # Global size modifier fot other fonts. Main font is BIPS
+            size += size_mod  # Global size modifier fot other fonts. Main font is BIPS
 
             draw.text((x, y),
                       info,
@@ -198,5 +198,5 @@ def auto_map(prompt, var, map_var):
     elif map_ == 'world':
         result = Image.alpha_composite(img, text_layer)
 
-    result.save(r".\img.png")
+    result.save(r"img.png")
     result.show("Map")
