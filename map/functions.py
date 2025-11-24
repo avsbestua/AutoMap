@@ -1,5 +1,6 @@
 import json
 import requests
+from tkinter.messagebox import showerror
 
 url = "https://openrouter.ai/api/v1/chat/completions"
 # Europe countries dictionary
@@ -65,10 +66,10 @@ def ai_request(prompt: str, mode: str) -> dict:
         dict_ = europe
     elif mode == 'world':
         dict_ = world
-# reading token from file
+# reading token from file 
     with open(r"./map/tk.txt", 'r') as file:
         API_KEY = file.read()
-# reading model from file
+# reading model from file @TODO Make entry in GUI
     with open(r"./map/model.txt", 'r') as file:
         AI_MODEL = file.read()
 
@@ -83,7 +84,7 @@ def ai_request(prompt: str, mode: str) -> dict:
         "model": f"{AI_MODEL}", #deepseek/deepseek-r1-0528:free
         "messages": [
             {"role": "system",
-             "content": "You are an assistant. You must provide accurate answers and may use the internet to search for information."},
+             "content": "You are cartographer. You must provide accurate information about countries or continents and may use the internet to search for information."},
             {"role": "user", "content": f"""Fill in a dictionary where the key """ + str(prompt) + f"""
     Search the internet and return the result as JSON. Dont write 'json' in start
 
@@ -94,7 +95,7 @@ def ai_request(prompt: str, mode: str) -> dict:
     {dict_}
     """}
         ],
-        "temperature": 0.5,
+        "temperature": 0.8,
     }
 # request
     response = requests.post(url, headers=headers, json=data)
@@ -112,4 +113,5 @@ def ai_request(prompt: str, mode: str) -> dict:
             return None
     else:
         print(f"Error: {response.status_code} - {response.text}")
+        
         return None

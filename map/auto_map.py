@@ -1,25 +1,30 @@
 import sys
 
 if sys.platform == 'win32':
+    # Windows specific imports
+
     import random
     import winsound
     from PIL import Image, ImageDraw, ImageFont, ImageFilter
     from . import constants
     from . import functions
 elif sys.platform == 'darwin':
+    # macOS specific imports
+
     import random
     from PIL import Image, ImageDraw, ImageFont, ImageFilter
     from . import constants
     from . import functions
 
 
+# Flag to show most and least country on map image @TODO Make flag in GUI
 need_most_least = False
 
 def auto_map(prompt, var, map_var):
     random_colors = {}
 
-    mode = var.get()  # AutoMap mode
-    map_ = map_var.get()
+    mode = var.get()  # AutoMap mode (text/number)
+    map_ = map_var.get() # AutoMap map (default (filling)/flag/world)
     print(f'Mode: {mode} Map: {map_}')
 # map selecting
     if map_ == "default":
@@ -28,7 +33,7 @@ def auto_map(prompt, var, map_var):
     elif map_ == 'flag':
         path = r"./resources/flag_map.png"
         dict_ = constants.countries
-    else:
+    elif map_ == 'world':
         path = r"./resources/world_map.png"
         dict_ = constants.world_coords
 # opening selected map
@@ -194,5 +199,4 @@ def auto_map(prompt, var, map_var):
         result = Image.alpha_composite(img, text_layer)
 
     result.save(r".\img.png")
-    winsound.Beep(750, 600)
     result.show("Map")

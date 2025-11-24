@@ -37,7 +37,7 @@ class App:
         entry.pack(pady=5)
 
         var = tk.StringVar()
-        var.set("txt")
+        var.set("txt") # AutoMap mode variable (text/number)
 
         rd_frame_mode = tk.Frame(root)  # Frame for radio buttons
         rd_frame_mode.pack()
@@ -50,8 +50,8 @@ class App:
                              font=("Consolas Bold", 15))
         rd2.pack()
 
-        map_var = tk.StringVar()  # Map variable
-        map_var.set("default")
+        map_var = tk.StringVar()  # Map variable (default/flag/world)
+        map_var.set("default") # default map by default
         rd_frame_map = tk.Frame(root)
         rd_frame_map.pack()
 
