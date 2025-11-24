@@ -1,8 +1,17 @@
-import random
-import winsound
-from PIL import Image, ImageDraw, ImageFont, ImageFilter
-from . import constants
-from . import functions
+import sys
+
+if sys.platform == 'win32':
+    import random
+    import winsound
+    from PIL import Image, ImageDraw, ImageFont, ImageFilter
+    from . import constants
+    from . import functions
+elif sys.platform == 'darwin':
+    import random
+    from PIL import Image, ImageDraw, ImageFont, ImageFilter
+    from . import constants
+    from . import functions
+
 
 need_most_least = False
 

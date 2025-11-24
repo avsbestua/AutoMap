@@ -1,7 +1,15 @@
-import threading
-import tkinter as tk
-from tkinter.messagebox import showinfo, showerror
-from auto_map.map import auto_map
+import sys
+
+if sys.platform == 'win32':
+    import threading
+    import tkinter as tk
+    from tkinter.messagebox import showinfo, showerror
+    from auto_map.map import auto_map
+elif sys.platform == 'darwin':
+    import threading
+    import tkinter as tk
+    from tkinter.messagebox import showinfo, showerror
+    from . import auto_map
 
 
 def map_(entry_get, var, map_var):  # Create threading for function auto_map
