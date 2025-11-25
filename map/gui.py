@@ -12,12 +12,12 @@ elif sys.platform == 'darwin':
     from . import auto_map
 
 
-def map_(entry_get, var, map_var, size_mod):  # Create threading for function auto_map
+def map_(entry_get, var, map_var, size_mod, most_least_flag):  # Create threading for function auto_map
     if not entry_get.strip():
         showerror("Error", "Write prompt for AI")
         return
     showinfo("AutoMap", "AutoMap was launched, wait a few minutes!")
-    threading.Thread(target=auto_map.auto_map, args=(entry_get, var, map_var, int(size_mod)), daemon=True).start()
+    threading.Thread(target=auto_map.auto_map, args=(entry_get, var, map_var, int(size_mod), most_least_flag), daemon=True).start()
 
 
 class App:
@@ -74,9 +74,13 @@ class App:
         size_mod_entry.pack(pady=5)
         size_mod_entry.insert(0, 15)
 
+        most_least_var = tk.BooleanVar()
+        most_least_check = tk.Checkbutton(root, text="Show most and least country", variable=most_least_var, bg=bg_color, fg=fg_color,
+                                          font=("Consolas Bold", 15), onvalue=True, offvalue=False)
+        most_least_check.pack()
 
         button = tk.Button(root, text="Start AutoMap", font=("Consolas Bold", 25), bg='#FFC914', fg=fg_color,
-                           command=lambda: map_(entry.get(), var, map_var, size_mod_entry.get()))
+                           command=lambda: map_(entry.get(), var, map_var, size_mod_entry.get(), most_least_var.get()))
         button.pack(pady=5)
 
         root.mainloop()

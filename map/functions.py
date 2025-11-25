@@ -40,7 +40,6 @@ europe = """{
         "spain":,
         "italy":,
         "france":,
-        "luxembourg":,
         "netherlands":,
         "united_kingdom":,
         "ireland":,
@@ -88,10 +87,12 @@ def ai_request(prompt: str, mode: str) -> dict:
             {"role": "user", "content": f"""Fill in a dictionary where the key """ + str(prompt) + f"""
     Search the internet and return the result as JSON. Dont write 'json' in start
 
-    If there is no exact data for a country or continent, use the average value from all other countries.
-
+    If there is no exact data for a country or continent, use the approximate value.
+             
     Provide the answer only as a dictionary, without explanations.
 
+    Dont include luxembourg
+                      
     {dict_}
     """}
         ],

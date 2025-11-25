@@ -2,25 +2,20 @@ import sys
 
 if sys.platform == 'win32':
     # Windows specific imports
-
     import random
     import winsound
     from PIL import Image, ImageDraw, ImageFont, ImageFilter
     from . import constants
     from . import functions
+
 elif sys.platform == 'darwin':
     # macOS specific imports
-
     import random
     from PIL import Image, ImageDraw, ImageFont, ImageFilter
     from . import constants
     from . import functions
 
-
-# Flag to show most and least country on map image @TODO Make flag in GUI
-need_most_least = False
-
-def auto_map(prompt, var, map_var, size_mod):
+def auto_map(prompt, var, map_var, size_mod, most_least_flag):
     random_colors = {}
 
     mode = var.get()  # AutoMap mode (text/number)
@@ -46,6 +41,11 @@ def auto_map(prompt, var, map_var, size_mod):
     ml_draw = ImageDraw.Draw(most_least)
 # Requesting information from AI
     ai_answer = functions.ai_request(prompt, map_var.get())
+
+    if ai_answer is None:
+        print("AI request failed")
+        return
+    
     print("Got information from AI")
     '''Writing the most and the least country'''
     most_country = max(ai_answer, key=ai_answer.get)
@@ -109,10 +109,8 @@ def auto_map(prompt, var, map_var, size_mod):
             elif len(info) >= 4:
                 x -= 70
 # number in countries
-            if name == 'luxembourg':
-                continue  # Next iteration if name in list
 
-            elif name in ['cyprus', 'kosovo',
+            if name in ['cyprus', 'kosovo',
                           'montenegro']:
                 size = 70
 
@@ -192,8 +190,9 @@ def auto_map(prompt, var, map_var, size_mod):
         result = Image.alpha_composite(result, borders)
         result = Image.alpha_composite(result, text_layer)
 
-        if need_most_least:
+        if most_least_flag: # Adding most and least layer if flag is set
             result = Image.alpha_composite(result, most_least)
+
 # merging layers
     elif map_ == 'world':
         result = Image.alpha_composite(img, text_layer)
