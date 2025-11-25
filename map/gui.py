@@ -12,23 +12,23 @@ elif sys.platform == 'darwin':
     from . import auto_map
 
 
-def map_(entry_get, var, map_var, size_mod, most_least_flag):  # Create threading for function auto_map
-    if not entry_get.strip():
+def map_(prompt, var, map_var, size_mod, most_short_form_flag):  # Create threading for function auto_map
+    if not prompt.strip():
         showerror("Error", "Write prompt for AI")
         return
     showinfo("AutoMap", "AutoMap was launched, wait a few minutes!")
-    threading.Thread(target=auto_map.auto_map, args=(entry_get, var, map_var, int(size_mod), most_least_flag), daemon=True).start()
+    threading.Thread(target=auto_map.auto_map, args=(prompt, var, map_var, int(size_mod), most_short_form_flag), daemon=True).start()
 
 
 class App:
     def __init__(self):
-        bg_color = '#E4572E' #background color
-        fg_color = '#2E282A' #foreground/text color
+        bg_color = "#FFCF20" #background color
+        fg_color = "#000000" #foreground/text color
         root = tk.Tk()
         root['bg'] = bg_color
         root.title("AutoMap")
         root.iconbitmap(r'resources/favicon.ico')
-        root.geometry("600x280+500+200")
+        root.geometry("600x380+500+200")
         root.resizable(width=False, height=False)
 
         tk.Label(root, text="Welcome to AutoMap!", font=("Consolas Bold", 25), bg=bg_color, fg=fg_color).pack()
@@ -74,13 +74,22 @@ class App:
         size_mod_entry.pack(pady=5)
         size_mod_entry.insert(0, 15)
 
-        most_least_var = tk.BooleanVar()
-        most_least_check = tk.Checkbutton(root, text="Show most and least country", variable=most_least_var, bg=bg_color, fg=fg_color,
-                                          font=("Consolas Bold", 15), onvalue=True, offvalue=False)
+        most_short_form_var = tk.StringVar()
+        most_short_form_var.set("none") # default no option selected
+        most_least_check = tk.Radiobutton(root, text="Show most and least country", variable=most_short_form_var, bg=bg_color, fg=fg_color,
+                                          font=("Consolas Bold", 15), value='most_least')
         most_least_check.pack()
 
+        write_short_form_check = tk.Radiobutton(root, text="Write in short form", variable=most_short_form_var, bg=bg_color, fg=fg_color,
+                                          font=("Consolas Bold", 15), value='write_short_form')
+        write_short_form_check.pack()
+
+        none_radiobutton = tk.Radiobutton(root, text="None of the above", variable=most_short_form_var, bg=bg_color, fg=fg_color,
+                                          font=("Consolas Bold", 15), value='none')
+        none_radiobutton.pack()
+
         button = tk.Button(root, text="Start AutoMap", font=("Consolas Bold", 25), bg='#FFC914', fg=fg_color,
-                           command=lambda: map_(entry.get(), var, map_var, size_mod_entry.get(), most_least_var.get()))
+                           command=lambda: map_(entry.get(), var, map_var, size_mod_entry.get(), most_short_form_var.get()))
         button.pack(pady=5)
 
         root.mainloop()
