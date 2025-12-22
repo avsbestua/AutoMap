@@ -1,1 +1,1 @@
-x-ai/grok-4.1-fast
+amazon/nova-2-lite-v1:free

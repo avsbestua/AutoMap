@@ -81,7 +81,7 @@ class App:
         most_least_check.pack()
 
         write_short_form_check = tk.Radiobutton(root, text="Write in short form", variable=most_short_form_var, bg=bg_color, fg=fg_color,
-                                          font=("Consolas Bold", 15), value='write_short_form')
+                                          font=("Consolas Bold", 15), value='short_form')
         write_short_form_check.pack()
 
         none_radiobutton = tk.Radiobutton(root, text="None of the above", variable=most_short_form_var, bg=bg_color, fg=fg_color,
