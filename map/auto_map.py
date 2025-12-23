@@ -17,7 +17,7 @@ elif sys.platform == 'darwin':
     from . import functions
     from tkinter.messagebox import askyesno
 
-def auto_map(prompt, var, map_var, size_mod, most_short_form_var):
+def auto_map(prompt, var, map_var, size_mod, most_short_form_var, model):
     #Most least and short form conflict solution @TODO Make most/least and short form compatible 
     
     if most_short_form_var == "short_form":
@@ -31,15 +31,12 @@ def auto_map(prompt, var, map_var, size_mod, most_short_form_var):
     #         write_short_form_flag = False
     # elif write_short_form_flag:
     #     prompt += " Write in short form, for example 1000=1k, 1000000=1M etc."
-    
-
         
-    
     random_colors = {}
 
     mode = var.get()  # AutoMap mode (text/number)
     map_ = map_var.get() # AutoMap map (default (filling)/flag/world)
-    print(f'Mode: {mode} Map: {map_}')
+    print(f'Mode: {mode} Map: {map_} Model: {model}')
 # map selecting
     if map_ == "default":
         path = r"./resources/map.png"
@@ -59,10 +56,9 @@ def auto_map(prompt, var, map_var, size_mod, most_short_form_var):
     draw = ImageDraw.Draw(text_layer)
     ml_draw = ImageDraw.Draw(most_least)
 # Requesting information from AI
-    ai_answer = functions.ai_request(prompt, map_var.get())
+    ai_answer = functions.ai_request(prompt, map_var.get(), model)
 
     if ai_answer is None:
-        print("AI request failed")
         return
     
     print("Got information from AI")
@@ -217,4 +213,5 @@ def auto_map(prompt, var, map_var, size_mod, most_short_form_var):
         result = Image.alpha_composite(img, text_layer)
 
     result.save(r"img.png")
+    print("Map saved as img.png")
     result.show("Map")

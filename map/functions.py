@@ -60,7 +60,7 @@ world ="""{
     }"""
 
 # mode selecting
-def ai_request(prompt: str, mode: str) -> dict:
+def ai_request(prompt: str, mode: str, AI_MODEL: str) -> dict:
     if mode == 'default' or mode == 'flag':
         dict_ = europe
     elif mode == 'world':
@@ -68,10 +68,6 @@ def ai_request(prompt: str, mode: str) -> dict:
 # reading token from file 
     with open(r"./map/tk.txt", 'r') as file:
         API_KEY = file.read()
-# reading model from file @TODO Make entry in GUI
-    with open(r"./map/model.txt", 'r') as file:
-        AI_MODEL = file.read()
-
 
     print(prompt)
     headers = {
@@ -113,6 +109,7 @@ def ai_request(prompt: str, mode: str) -> dict:
             print("Result:", res)
             return None
     else:
+        showerror("Error", f"Error: {response.status_code} - {response.text}")
         print(f"Error: {response.status_code} - {response.text}")
         
         return None

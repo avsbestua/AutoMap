@@ -1,1 +1,1 @@
-amazon/nova-2-lite-v1:free
+xiaomi/mimo-v2-flash:free

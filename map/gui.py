@@ -12,12 +12,12 @@ elif sys.platform == 'darwin':
     from . import auto_map
 
 
-def map_(prompt, var, map_var, size_mod, most_short_form_flag):  # Create threading for function auto_map
+def map_(prompt, var, map_var, size_mod, most_short_form_flag, model):  # Create threading for function auto_map
     if not prompt.strip():
         showerror("Error", "Write prompt for AI")
         return
     showinfo("AutoMap", "AutoMap was launched, wait a few minutes!")
-    threading.Thread(target=auto_map.auto_map, args=(prompt, var, map_var, int(size_mod), most_short_form_flag), daemon=True).start()
+    threading.Thread(target=auto_map.auto_map, args=(prompt, var, map_var, int(size_mod), most_short_form_flag, model), daemon=True).start()
 
 
 class App:
@@ -28,12 +28,13 @@ class App:
         root['bg'] = bg_color
         root.title("AutoMap")
         root.iconbitmap(r'resources/favicon.ico')
-        root.geometry("600x380+500+200")
+        root.geometry("600x500+500+200")
         root.resizable(width=False, height=False)
 
         tk.Label(root, text="Welcome to AutoMap!", font=("Consolas Bold", 25), bg=bg_color, fg=fg_color).pack()
 
         entry = tk.Entry(root, font=("Consolas Bold", 25))
+        entry.insert(0, "How many bears are there in your country?") #default-service prompt
         entry.pack(pady=5)
 
         var = tk.StringVar()
@@ -88,8 +89,15 @@ class App:
                                           font=("Consolas Bold", 15), value='none')
         none_radiobutton.pack()
 
+        tk.Label(root, text="Write model bellow", font=("Consolas Bold", 25), bg=bg_color, fg=fg_color).pack(pady=5)
+
+        model_entry = tk.Entry(root, font=("Consolas Bold", 20))
+        model_entry.pack(pady=5)
+        model_entry.insert(0, "moonshotai/kimi-k2:free")
+
+
         button = tk.Button(root, text="Start AutoMap", font=("Consolas Bold", 25), bg='#FFC914', fg=fg_color,
-                           command=lambda: map_(entry.get(), var, map_var, size_mod_entry.get(), most_short_form_var.get()))
+                           command=lambda: map_(entry.get(), var, map_var, size_mod_entry.get(), most_short_form_var.get(), model_entry.get().strip()))
         button.pack(pady=5)
 
         root.mainloop()
