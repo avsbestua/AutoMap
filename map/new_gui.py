@@ -36,6 +36,8 @@ class App(ctk.CTk):
         icon_photo = ImageTk.PhotoImage(icon_image)
         self.iconphoto(False, icon_photo)
 
+        self.iconbitmap("resources/favicon.ico")
+
         ctk.CTkLabel(self, text="AutoMap", font=("Kodchasan", 45), text_color='#000000').pack(pady=(20, 10))
         
         ctk.CTkLabel(self, text="Enter prompt for AI", font=("Arial Rounded MT Bold", 20), text_color='#000000').pack(pady=(20, 5))
