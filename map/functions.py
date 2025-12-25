@@ -105,7 +105,7 @@ def ai_request(prompt: str, mode: str, AI_MODEL: str) -> dict:
             country_dict = json.loads(res)
             return country_dict
         except json.JSONDecodeError:
-            print("Failed to convert into dictionary")
+            showerror("Error", f"Failed to convert into dictionary. Result, {res}")
             print("Result:", res)
             return None
     else:

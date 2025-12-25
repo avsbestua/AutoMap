@@ -15,14 +15,17 @@ elif sys.platform == 'darwin':
     from PIL import Image, ImageDraw, ImageFont, ImageFilter
     from . import constants
     from . import functions
-    from tkinter.messagebox import askyesno
+    from tkinter.messagebox import showinfo
 
-def auto_map(prompt, var, map_var, size_mod, most_short_form_var, model):
+def auto_map(prompt, mode, map_, size_mod, optional_feature, model):
     #Most least and short form conflict solution @TODO Make most/least and short form compatible 
     
-    if most_short_form_var == "short_form":
+    if optional_feature == "short_form":
         prompt += " Write in short form, for example 1000=1k, 1000000=1M etc."
     
+    if optional_feature == "most_least" and map_ == "world":
+        showinfo("Info", "Most/Least feature is not available for world map. It will be disabled.")
+        optional_feature = None
     # if most_least_flag and write_short_form_flag:
     #     if askyesno("Warning", "Write in short form and most/least can`t be selected both. Press Yes to continue with short form and disable most/least, or No to continue with most/least and disable short form."):
     #         most_least_flag = False
@@ -33,9 +36,7 @@ def auto_map(prompt, var, map_var, size_mod, most_short_form_var, model):
     #     prompt += " Write in short form, for example 1000=1k, 1000000=1M etc."
         
     random_colors = {}
-
-    mode = var.get()  # AutoMap mode (text/number)
-    map_ = map_var.get() # AutoMap map (default (filling)/flag/world)
+                         
     print(f'Mode: {mode} Map: {map_} Model: {model}')
 # map selecting
     if map_ == "default":
@@ -56,7 +57,7 @@ def auto_map(prompt, var, map_var, size_mod, most_short_form_var, model):
     draw = ImageDraw.Draw(text_layer)
     ml_draw = ImageDraw.Draw(most_least)
 # Requesting information from AI
-    ai_answer = functions.ai_request(prompt, map_var.get(), model)
+    ai_answer = functions.ai_request(prompt, map_, model)
 
     if ai_answer is None:
         return
@@ -205,7 +206,7 @@ def auto_map(prompt, var, map_var, size_mod, most_short_form_var, model):
         result = Image.alpha_composite(result, borders)
         result = Image.alpha_composite(result, text_layer)
 
-        if most_short_form_var == "most_least": # Adding most and least layer if flag is set
+        if optional_feature == "most_least" and map_ != "world": # Adding most and least layer if flag is set
             result = Image.alpha_composite(result, most_least)
 
 # merging layers
