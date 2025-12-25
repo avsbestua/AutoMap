@@ -93,7 +93,7 @@ class App:
 
         model_entry = tk.Entry(root, font=("Consolas Bold", 20))
         model_entry.pack(pady=5)
-        model_entry.insert(0, "moonshotai/kimi-k2:free")
+        model_entry.insert(0, "tngtech/tng-r1t-chimera:free") #default model
 
 
         button = tk.Button(root, text="Start AutoMap", font=("Consolas Bold", 25), bg='#FFC914', fg=fg_color,
