@@ -3,7 +3,6 @@ import sys
 if sys.platform == 'win32':
     # Windows specific imports
     import random
-    import winsound
     from PIL import Image, ImageDraw, ImageFont, ImageFilter
     from . import constants
     from . import functions
@@ -15,7 +14,7 @@ elif sys.platform == 'darwin':
     from PIL import Image, ImageDraw, ImageFont, ImageFilter
     from . import constants
     from . import functions
-    from tkinter.messagebox import showinfo
+    from tkinter.messagebox import showinfo, showwarning
 
 def auto_map(prompt, mode, map_, size_mod, optional_feature, model):
     #Most least and short form conflict solution @TODO Make most/least and short form compatible 
@@ -23,9 +22,17 @@ def auto_map(prompt, mode, map_, size_mod, optional_feature, model):
     if optional_feature == "short_form":
         prompt += " Write in short form, for example 1000=1k, 1000000=1M etc."
     
-    if optional_feature == "most_least" and map_ == "world":
-        showinfo("Info", "Most/Least feature is not available for world map. It will be disabled.")
+    elif optional_feature == "short_form" and mode == "num":
+        showwarning("Warning", "Short form feature is only available for text mode. It will be disabled.")
         optional_feature = None
+    
+    elif optional_feature == "most_least" and mode == "text":
+        showwarning("Warning", "Most/least feature may be incompatible with text mode.")
+
+    if optional_feature == "most_least" and map_ == "world":
+        showwarning("Warning", "Most/Least feature is not available for world map. It will be disabled.")
+        optional_feature = None
+
     # if most_least_flag and write_short_form_flag:
     #     if askyesno("Warning", "Write in short form and most/least can`t be selected both. Press Yes to continue with short form and disable most/least, or No to continue with most/least and disable short form."):
     #         most_least_flag = False
