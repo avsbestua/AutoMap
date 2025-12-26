@@ -6,7 +6,7 @@ if sys.platform == 'win32':
     from PIL import Image, ImageDraw, ImageFont, ImageFilter
     from . import constants
     from . import functions
-    from tkinter.messagebox import askyesno
+    from tkinter.messagebox import askyesno,showwarning
 
 elif sys.platform == 'darwin':
     # macOS specific imports
