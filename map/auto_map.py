@@ -22,11 +22,11 @@ def auto_map(prompt, mode, map_, size_mod, optional_feature, model):
     if optional_feature == "short_form":
         prompt += " Write in short form, for example 1000=1k, 1000000=1M etc."
     
-    elif optional_feature == "short_form" and mode == "num":
+    if optional_feature == "short_form" and mode == "num":
         showwarning("Warning", "Short form feature is only available for text mode. It will be disabled.")
         optional_feature = None
-    
-    elif optional_feature == "most_least" and mode == "text":
+
+    if optional_feature == "most_least" and mode == "text":
         showwarning("Warning", "Most/least feature may be incompatible with text mode.")
 
     if optional_feature == "most_least" and map_ == "world":
