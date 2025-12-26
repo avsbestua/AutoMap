@@ -1,2 +1,6 @@
 img.png
 /__pycache__
+/.venv
+/resources/__pycache__
+/resources/.DS_Store
+/.DS_Store
