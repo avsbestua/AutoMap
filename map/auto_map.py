@@ -2,30 +2,49 @@ import sys
 
 if sys.platform == 'win32':
     # Windows specific imports
-
     import random
-    import winsound
     from PIL import Image, ImageDraw, ImageFont, ImageFilter
     from . import constants
     from . import functions
+    from tkinter.messagebox import askyesno,showwarning
+
 elif sys.platform == 'darwin':
     # macOS specific imports
-
     import random
     from PIL import Image, ImageDraw, ImageFont, ImageFilter
     from . import constants
     from . import functions
+    from tkinter.messagebox import showinfo, showwarning
 
+def auto_map(prompt, mode, map_, size_mod, optional_feature, model):
+    #Most least and short form conflict solution @TODO Make most/least and short form compatible 
+    
+    if optional_feature == "short_form":
+        prompt += " Write in short form, for example 1000=1k, 1000000=1M etc."
+    
+    if optional_feature == "short_form" and mode == "num":
+        showwarning("Warning", "Short form feature is only available for text mode. It will be disabled.")
+        optional_feature = None
 
-# Flag to show most and least country on map image @TODO Make flag in GUI
-need_most_least = False
+    if optional_feature == "most_least" and mode == "text":
+        showwarning("Warning", "Most/least feature may be incompatible with text mode.")
 
-def auto_map(prompt, var, map_var):
+    if optional_feature == "most_least" and map_ == "world":
+        showwarning("Warning", "Most/Least feature is not available for world map. It will be disabled.")
+        optional_feature = None
+
+    # if most_least_flag and write_short_form_flag:
+    #     if askyesno("Warning", "Write in short form and most/least can`t be selected both. Press Yes to continue with short form and disable most/least, or No to continue with most/least and disable short form."):
+    #         most_least_flag = False
+    #         prompt += " Write in short form, for example 1000=1k, 1000000=1M etc."
+    #     else:
+    #         write_short_form_flag = False
+    # elif write_short_form_flag:
+    #     prompt += " Write in short form, for example 1000=1k, 1000000=1M etc."
+        
     random_colors = {}
-
-    mode = var.get()  # AutoMap mode (text/number)
-    map_ = map_var.get() # AutoMap map (default (filling)/flag/world)
-    print(f'Mode: {mode} Map: {map_}')
+                         
+    print(f'Mode: {mode} Map: {map_} Model: {model}')
 # map selecting
     if map_ == "default":
         path = r"./resources/map.png"
@@ -45,7 +64,11 @@ def auto_map(prompt, var, map_var):
     draw = ImageDraw.Draw(text_layer)
     ml_draw = ImageDraw.Draw(most_least)
 # Requesting information from AI
-    ai_answer = functions.ai_request(prompt, map_var.get())
+    ai_answer = functions.ai_request(prompt, map_, model)
+
+    if ai_answer is None:
+        return
+    
     print("Got information from AI")
     '''Writing the most and the least country'''
     most_country = max(ai_answer, key=ai_answer.get)
@@ -109,10 +132,8 @@ def auto_map(prompt, var, map_var):
             elif len(info) >= 4:
                 x -= 70
 # number in countries
-            if name == 'luxembourg':
-                continue  # Next iteration if name in list
 
-            elif name in ['cyprus', 'kosovo',
+            if name in ['cyprus', 'kosovo',
                           'montenegro']:
                 size = 70
 
@@ -142,7 +163,7 @@ def auto_map(prompt, var, map_var):
                 y -= 20
                 size += 25
 
-            size += constants.GLOBAL_SIZE_MODIFIER  # Global size modifier fot other fonts. Main font is BIPS
+            size += size_mod  # Global size modifier fot other fonts. Main font is BIPS
 
             draw.text((x, y),
                       info,
@@ -155,7 +176,7 @@ def auto_map(prompt, var, map_var):
         else:
 
             size = 50
-            size += constants.GLOBAL_SIZE_MODIFIER  # Global size modifier fot other fonts. Main font is BIPS
+            size += size_mod  # Global size modifier fot other fonts. Main font is BIPS
 
             draw.text((x, y),
                       info,
@@ -192,11 +213,13 @@ def auto_map(prompt, var, map_var):
         result = Image.alpha_composite(result, borders)
         result = Image.alpha_composite(result, text_layer)
 
-        if need_most_least:
+        if optional_feature == "most_least" and map_ != "world": # Adding most and least layer if flag is set
             result = Image.alpha_composite(result, most_least)
+
 # merging layers
     elif map_ == 'world':
         result = Image.alpha_composite(img, text_layer)
 
-    result.save(r".\img.png")
+    result.save(r"img.png")
+    print("Map saved as img.png")
     result.show("Map")

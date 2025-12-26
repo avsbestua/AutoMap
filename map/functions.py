@@ -40,7 +40,6 @@ europe = """{
         "spain":,
         "italy":,
         "france":,
-        "luxembourg":,
         "netherlands":,
         "united_kingdom":,
         "ireland":,
@@ -61,7 +60,7 @@ world ="""{
     }"""
 
 # mode selecting
-def ai_request(prompt: str, mode: str) -> dict:
+def ai_request(prompt: str, mode: str, AI_MODEL: str) -> dict:
     if mode == 'default' or mode == 'flag':
         dict_ = europe
     elif mode == 'world':
@@ -69,10 +68,6 @@ def ai_request(prompt: str, mode: str) -> dict:
 # reading token from file 
     with open(r"./map/tk.txt", 'r') as file:
         API_KEY = file.read()
-# reading model from file @TODO Make entry in GUI
-    with open(r"./map/model.txt", 'r') as file:
-        AI_MODEL = file.read()
-
 
     print(prompt)
     headers = {
@@ -88,10 +83,12 @@ def ai_request(prompt: str, mode: str) -> dict:
             {"role": "user", "content": f"""Fill in a dictionary where the key """ + str(prompt) + f"""
     Search the internet and return the result as JSON. Dont write 'json' in start
 
-    If there is no exact data for a country or continent, use the average value from all other countries.
-
+    If there is no exact data for a country or continent, use the approximate value.
+             
     Provide the answer only as a dictionary, without explanations.
 
+    Dont include luxembourg
+                      
     {dict_}
     """}
         ],
@@ -108,10 +105,11 @@ def ai_request(prompt: str, mode: str) -> dict:
             country_dict = json.loads(res)
             return country_dict
         except json.JSONDecodeError:
-            print("Failed to convert into dictionary")
+            showerror("Error", f"Failed to convert into dictionary. Result, {res}")
             print("Result:", res)
             return None
     else:
+        showerror("Error", f"Error: {response.status_code} - {response.text}")
         print(f"Error: {response.status_code} - {response.text}")
         
         return None
