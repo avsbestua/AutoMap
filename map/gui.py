@@ -95,13 +95,15 @@ class App(ctk.CTk):
         short_form_rd = ctk.CTkRadioButton(options_frame, bg_color='#343434', text="Write in short form", variable=optional_feature_var, value="short_form", font=("Arial Rounded MT Bold", 12), text_color="#FFFFFF")
         short_form_rd.pack(side='left', padx=10, pady=10)
 
-        ctk.CTkLabel(self, text="Enter AI Model", font=("Arial Rounded MT Bold", 20), text_color='#000000').pack(pady=(10, 5))
-        model_entry = ctk.CTkEntry(self, width=350, height=40, font=("Arial Rounded MT Bold", 20), justify='center')
-        model_entry.insert(0, "tngtech/tng-r1t-chimera:free")  # Default model
-        model_entry.pack(pady=(0, 20))
+        ctk.CTkLabel(self, text="Select AI Model", font=("Arial Rounded MT Bold", 20), text_color='#000000').pack(pady=(10, 5))
+        
+        ai_var = ctk.StringVar(value="gemini-2.5-flash")
+        
+        ai_model = ctk.CTkComboBox(self, width=350, height=40, font=("Arial Rounded MT Bold", 20), variable=ai_var, values=["gemma-3-27b-it", "gemini-2.5-flash", "gemini-2.5-flash-lite", "gemini-3-flash"])
+        ai_model.pack(pady=(0, 20))
 
         run_button = ctk.CTkButton(self, text="Run AutoMap", font=("Arial Rounded MT Bold", 40), fg_color='#343434', border_width=5, border_color="#FFFFFF", width=400, height=130, corner_radius=20,
-                                   command=lambda: map_(prompt_entry.get(), mode_var.get(), map_var.get(), gsm_entry.get(), optional_feature_var.get(), model_entry.get()))
+                                   command=lambda: map_(prompt_entry.get(), mode_var.get(), map_var.get(), gsm_entry.get(), optional_feature_var.get(), ai_var.get()))
         run_button.pack(pady=(10, 20))
 
         self.mainloop()

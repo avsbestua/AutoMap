@@ -69,11 +69,8 @@ def ai_request(prompt: str, mode: str, AI_MODEL: str) -> dict:
         dict_ = world
 # reading token from file 
     with open(r"./map/tk.txt", 'r') as file:
-        API_KEY = file.read()
-
-    with open(r"./map/google_tk.txt", 'r') as file:
-        os.environ['GEMINI_API_KEY'] = file.read()
-
+        os.environ['GEMINI_API_KEY'] = file.read().strip()
+        
     print(prompt)
 
 # request data
@@ -90,34 +87,25 @@ def ai_request(prompt: str, mode: str, AI_MODEL: str) -> dict:
     """
 
     client = genai.Client()
-    request = client.models.generate_content(
-        model="gemini-2.5-flash",
-        contents=prompt_to_ai,
-    )
+    try:
+        request = client.models.generate_content(
+            model=AI_MODEL,
+            contents=prompt_to_ai,
+        )
 
-    print("AI response:", request.text)
+
+    except Exception as e:
+        showerror("Error", f"AI request failed: {e}")
+        return None
 
     try:
         json_style = request.text.strip().replace("```json", "").replace("```", "").strip()
         country_dict = json.loads(json_style)
         return country_dict
     except json.JSONDecodeError:
-        showerror("Error", f"Failed to convert into dictionary. Result")
+        showerror("Error", f"Failed to convert into dictionary. Result {json_style}")
         print("Result:", json_style)
         return None
 
 
-# # request
-#     response = requests.post(url, headers=headers, json=data)
 
-#     if response.status_code == 200:
-#         result = response.json()
-#         res = result['choices'][0]['message']['content'].strip()
-#         try:
-# # trying to parse dictionary
-
-#     else:
-#         showerror("Error", f"Error: {response.status_code} - {response.text}")
-#         print(f"Error: {response.status_code} - {response.text}")
-        
-#         return None
