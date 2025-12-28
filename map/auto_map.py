@@ -6,7 +6,7 @@ if sys.platform == 'win32':
     from PIL import Image, ImageDraw, ImageFont, ImageFilter
     from . import constants
     from . import functions
-    from tkinter.messagebox import askyesno,showwarning
+    from tkinter.messagebox import askyesno, showwarning, showerror
 
 elif sys.platform == 'darwin':
     # macOS specific imports
@@ -14,7 +14,7 @@ elif sys.platform == 'darwin':
     from PIL import Image, ImageDraw, ImageFont, ImageFilter
     from . import constants
     from . import functions
-    from tkinter.messagebox import showinfo, showwarning
+    from tkinter.messagebox import showinfo, showwarning, showerror
 
 def auto_map(prompt, mode, map_, size_mod, optional_feature, model):
     #Most least and short form conflict solution @TODO Make most/least and short form compatible 
@@ -67,6 +67,7 @@ def auto_map(prompt, mode, map_, size_mod, optional_feature, model):
     ai_answer = functions.ai_request(prompt, map_, model)
 
     if ai_answer is None:
+        showerror("Error", "No information or bad info received from AI")
         return
     
     print("Got information from AI")
