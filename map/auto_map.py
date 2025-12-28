@@ -225,6 +225,6 @@ def auto_map(prompt, mode, map_, size_mod, optional_feature, model, font_name):
     elif map_ == 'world':
         result = Image.alpha_composite(img, text_layer)
 
-    result.save(Path(__file__).parent / "img.png")
+    result.save(Path(__file__).parent.parent / "img.png")
     print("Map saved as img.png")
     result.show("Map")
