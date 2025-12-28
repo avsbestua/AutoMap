@@ -47,13 +47,13 @@ def auto_map(prompt, mode, map_, size_mod, optional_feature, model):
     print(f'Mode: {mode} Map: {map_} Model: {model}')
 # map selecting
     if map_ == "default":
-        path = r"./resources/map.png"
+        path = r"./resources/maps/default_map.png"
         dict_ = constants.countries
     elif map_ == 'flag':
-        path = r"./resources/flag_map.png"
+        path = r"./resources/maps/flag_map.png"
         dict_ = constants.countries
     elif map_ == 'world':
-        path = r"./resources/world_map.png"
+        path = r"./resources/maps/world_map.png"
         dict_ = constants.world_coords
 # opening selected map
     img = Image.open(path).convert("RGBA")
@@ -77,7 +77,7 @@ def auto_map(prompt, mode, map_, size_mod, optional_feature, model):
 
     ml_draw.text((106, 1240),
               f'Most: {most_country.capitalize()}\nLeast: {least_country.capitalize()}',
-              font=ImageFont.truetype(r"./resources/font.ttf", 150),
+              font=ImageFont.truetype(r"./resources/fonts/font.ttf", 150),
               fill=(255, 255, 255, 255),
               stroke_width=15,
               stroke_fill=(0, 0, 0, 255))
@@ -168,7 +168,7 @@ def auto_map(prompt, mode, map_, size_mod, optional_feature, model):
 
             draw.text((x, y),
                       info,
-                      font=ImageFont.truetype(r"./resources/font.ttf", size),
+                      font=ImageFont.truetype(r"./resources/fonts/font.ttf", size),
                       fill=(255, 255, 255, 255),
                       stroke_width=15,
                       stroke_fill=(0, 0, 0, 255))
@@ -181,7 +181,7 @@ def auto_map(prompt, mode, map_, size_mod, optional_feature, model):
 
             draw.text((x, y),
                       info,
-                      font=ImageFont.truetype(r"./resources/font.ttf", size),
+                      font=ImageFont.truetype(r"./resources/fonts/font.ttf", size),
                       fill=(255, 255, 255, 255),
                       stroke_width=15,
                       stroke_fill=(0, 0, 0, 255))
@@ -189,7 +189,7 @@ def auto_map(prompt, mode, map_, size_mod, optional_feature, model):
 
 # adding relief map
     if map_ in ['default', 'flag']:
-        relief = Image.open(r"./resources/map_relief.png").convert("RGBA")
+        relief = Image.open(r"./resources/maps/map_relief.png").convert("RGBA")
         relief = relief.resize(img.size)
 
         r, g, b, a = relief.split()
@@ -198,7 +198,7 @@ def auto_map(prompt, mode, map_, size_mod, optional_feature, model):
 
         result = Image.alpha_composite(img, relief)
 
-        borders = Image.open(r'./resources/map.png').convert("RGBA")  # Second borders layer
+        borders = Image.open(r'./resources/maps/map.png').convert("RGBA")  # Second borders layer
         borders = borders.resize(result.size)
 
         borders = borders.filter(ImageFilter.GaussianBlur(radius=15))
