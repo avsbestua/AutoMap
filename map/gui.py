@@ -6,38 +6,39 @@ if sys.platform == 'win32':
     from tkinter.messagebox import showinfo, showerror
     from auto_map.map import auto_map
     from PIL import Image, ImageTk
+    from pathlib import Path
 elif sys.platform == 'darwin':
     import threading
     import customtkinter as ctk
     from tkinter.messagebox import showinfo, showerror
     from . import auto_map
     from PIL import Image, ImageTk
+    from pathlib import Path
 
 
-def map_(prompt, mode, map, size_mod, optional_feature, model):  # Create threading for function auto_map
+def map_(prompt, mode, map, size_mod, optional_feature, model, font_path):  # Create threading for function auto_map
     if not prompt.strip():
         showerror("Error", "Write prompt for AI")
         return
     showinfo("AutoMap", "AutoMap was launched, wait a few minutes!")
-    threading.Thread(target=auto_map.auto_map, args=(prompt, mode, map, int(size_mod), optional_feature, model), daemon=True).start()
+    threading.Thread(target=auto_map.auto_map, args=(prompt, mode, map, int(size_mod), optional_feature, model, font_path), daemon=True).start()
 
 
 class App(ctk.CTk):
     def __init__(self):
         super().__init__()
         self.title("AutoMap")
-        self.geometry("550x790+500+0")
-        self.resizable(width=False, height=False)
+        self.geometry("850x830+500+0")
+        #self.resizable(width=False, height=False)
         
         bg_color = '#B4D988'
         self.configure(fg_color=bg_color)
 
-        icon_image = Image.open("resources/favicon.ico")
+        icon_image = Image.open("resources/othr/favicon.ico")
         icon_photo = ImageTk.PhotoImage(icon_image)
         self.iconphoto(False, icon_photo)
 
-        self.iconbitmap("resources/favicon.ico")
-
+        self.iconbitmap("resources/othr/favicon.ico")
         ctk.CTkLabel(self, text="AutoMap", font=("Kodchasan", 45), text_color='#000000').pack(pady=(20, 10))
         
         ctk.CTkLabel(self, text="Enter prompt for AI", font=("Arial Rounded MT Bold", 20), text_color='#000000').pack(pady=(20, 5))
@@ -102,8 +103,15 @@ class App(ctk.CTk):
         ai_model = ctk.CTkComboBox(self, width=350, height=40, font=("Arial Rounded MT Bold", 20), variable=ai_var, values=["gemma-3-27b-it", "gemini-2.5-flash", "gemini-2.5-flash-lite", "gemini-3-flash"])
         ai_model.pack(pady=(0, 20))
 
+        ctk.CTkLabel(self, text="Select Font", font=("Arial Rounded MT Bold", 20), text_color='#000000').pack(pady=(10, 5))
+
+        font_var = ctk.StringVar(value="resources/fonts/DIN Condensed.ttf")
+
+        font_cb = ctk.CTkComboBox(self, width=350, height=40, font=("Arial Rounded MT Bold", 20), variable=font_var, values=[f"resources/fonts/{x.name}" for x in Path("resources/fonts").iterdir() if x.suffix == '.ttf'])
+        font_cb.pack(pady=(0, 20))
+
         run_button = ctk.CTkButton(self, text="Run AutoMap", font=("Arial Rounded MT Bold", 40), fg_color='#343434', border_width=5, border_color="#FFFFFF", width=400, height=130, corner_radius=20,
-                                   command=lambda: map_(prompt_entry.get(), mode_var.get(), map_var.get(), gsm_entry.get(), optional_feature_var.get(), ai_var.get()))
+                                   command=lambda: map_(prompt_entry.get(), mode_var.get(), map_var.get(), gsm_entry.get(), optional_feature_var.get(), ai_var.get(), font_var.get()))
         run_button.pack(pady=(10, 20))
 
         self.mainloop()

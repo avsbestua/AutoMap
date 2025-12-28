@@ -16,7 +16,7 @@ elif sys.platform == 'darwin':
     from . import functions
     from tkinter.messagebox import showinfo, showwarning, showerror
 
-def auto_map(prompt, mode, map_, size_mod, optional_feature, model):
+def auto_map(prompt, mode, map_, size_mod, optional_feature, model, font_path):
     #Most least and short form conflict solution @TODO Make most/least and short form compatible 
     
     if optional_feature == "short_form":
@@ -71,16 +71,18 @@ def auto_map(prompt, mode, map_, size_mod, optional_feature, model):
         return
     
     print("Got information from AI")
-    '''Writing the most and the least country'''
-    most_country = max(ai_answer, key=ai_answer.get)
-    least_country = min(ai_answer, key=ai_answer.get)
 
-    ml_draw.text((106, 1240),
-              f'Most: {most_country.capitalize()}\nLeast: {least_country.capitalize()}',
-              font=ImageFont.truetype(r"./resources/fonts/font.ttf", 150),
-              fill=(255, 255, 255, 255),
-              stroke_width=15,
-              stroke_fill=(0, 0, 0, 255))
+    if optional_feature == "most_least":
+        '''Writing the most and the least country'''
+        most_country = max(ai_answer, key=ai_answer.get)
+        least_country = min(ai_answer, key=ai_answer.get)
+
+        ml_draw.text((106, 1240),
+                f'Most: {most_country.capitalize()}\nLeast: {least_country.capitalize()}',
+                font=ImageFont.truetype(font_path, 150),
+                fill=(255, 255, 255, 255),
+                stroke_width=15,
+                stroke_fill=(0, 0, 0, 255))
 
     for name, points in dict_.items():
         '''Number mode'''
@@ -168,7 +170,7 @@ def auto_map(prompt, mode, map_, size_mod, optional_feature, model):
 
             draw.text((x, y),
                       info,
-                      font=ImageFont.truetype(r"./resources/fonts/font.ttf", size),
+                      font=ImageFont.truetype(font_path, size),
                       fill=(255, 255, 255, 255),
                       stroke_width=15,
                       stroke_fill=(0, 0, 0, 255))
@@ -181,7 +183,7 @@ def auto_map(prompt, mode, map_, size_mod, optional_feature, model):
 
             draw.text((x, y),
                       info,
-                      font=ImageFont.truetype(r"./resources/fonts/font.ttf", size),
+                      font=ImageFont.truetype(font_path, size),
                       fill=(255, 255, 255, 255),
                       stroke_width=15,
                       stroke_fill=(0, 0, 0, 255))
@@ -198,7 +200,7 @@ def auto_map(prompt, mode, map_, size_mod, optional_feature, model):
 
         result = Image.alpha_composite(img, relief)
 
-        borders = Image.open(r'./resources/maps/map.png').convert("RGBA")  # Second borders layer
+        borders = Image.open(r'./resources/maps/default_map.png').convert("RGBA")  # Second borders layer
         borders = borders.resize(result.size)
 
         borders = borders.filter(ImageFilter.GaussianBlur(radius=15))
