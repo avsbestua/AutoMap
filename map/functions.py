@@ -3,8 +3,8 @@ import requests
 import os
 from google import genai
 from tkinter.messagebox import showerror
+from pathlib import Path
 
-url = "https://openrouter.ai/api/v1/chat/completions"
 # Europe countries dictionary
 europe = """{
 
@@ -68,7 +68,7 @@ def ai_request(prompt: str, mode: str, AI_MODEL: str) -> dict:
     elif mode == 'world':
         dict_ = world
 # reading token from file 
-    with open(r"./map/tk.txt", 'r') as file:
+    with open(Path(__file__).parent / "tk.txt", 'r') as file:
         os.environ['GEMINI_API_KEY'] = file.read().strip()
         
     print(prompt)

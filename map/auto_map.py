@@ -7,6 +7,7 @@ if sys.platform == 'win32':
     from . import constants
     from . import functions
     from tkinter.messagebox import askyesno, showwarning, showerror
+    from pathlib import Path
 
 elif sys.platform == 'darwin':
     # macOS specific imports
@@ -15,8 +16,9 @@ elif sys.platform == 'darwin':
     from . import constants
     from . import functions
     from tkinter.messagebox import showinfo, showwarning, showerror
+    from pathlib import Path
 
-def auto_map(prompt, mode, map_, size_mod, optional_feature, model, font_path):
+def auto_map(prompt, mode, map_, size_mod, optional_feature, model, font_name):
     #Most least and short form conflict solution @TODO Make most/least and short form compatible 
     
     if optional_feature == "short_form":
@@ -47,13 +49,13 @@ def auto_map(prompt, mode, map_, size_mod, optional_feature, model, font_path):
     print(f'Mode: {mode} Map: {map_} Model: {model}')
 # map selecting
     if map_ == "default":
-        path = r"./resources/maps/default_map.png"
+        path = Path(__file__).parent.parent / "./resources/maps/default_map.png"
         dict_ = constants.countries
     elif map_ == 'flag':
-        path = r"./resources/maps/flag_map.png"
+        path = Path(__file__).parent.parent / "./resources/maps/flag_map.png"
         dict_ = constants.countries
     elif map_ == 'world':
-        path = r"./resources/maps/world_map.png"
+        path = Path(__file__).parent.parent / "./resources/maps/world_map.png"
         dict_ = constants.world_coords
 # opening selected map
     img = Image.open(path).convert("RGBA")
@@ -79,7 +81,7 @@ def auto_map(prompt, mode, map_, size_mod, optional_feature, model, font_path):
 
         ml_draw.text((106, 1240),
                 f'Most: {most_country.capitalize()}\nLeast: {least_country.capitalize()}',
-                font=ImageFont.truetype(font_path, 150),
+                font=ImageFont.truetype(str(Path("resources/fonts") / font_name), 150),
                 fill=(255, 255, 255, 255),
                 stroke_width=15,
                 stroke_fill=(0, 0, 0, 255))
@@ -170,7 +172,7 @@ def auto_map(prompt, mode, map_, size_mod, optional_feature, model, font_path):
 
             draw.text((x, y),
                       info,
-                      font=ImageFont.truetype(font_path, size),
+                      font=ImageFont.truetype(str(Path("resources/fonts") / font_name), size),
                       fill=(255, 255, 255, 255),
                       stroke_width=15,
                       stroke_fill=(0, 0, 0, 255))
@@ -183,7 +185,7 @@ def auto_map(prompt, mode, map_, size_mod, optional_feature, model, font_path):
 
             draw.text((x, y),
                       info,
-                      font=ImageFont.truetype(font_path, size),
+                      font=ImageFont.truetype(str(Path("resources/fonts") / font_name), size),
                       fill=(255, 255, 255, 255),
                       stroke_width=15,
                       stroke_fill=(0, 0, 0, 255))
@@ -191,7 +193,7 @@ def auto_map(prompt, mode, map_, size_mod, optional_feature, model, font_path):
 
 # adding relief map
     if map_ in ['default', 'flag']:
-        relief = Image.open(r"./resources/maps/map_relief.png").convert("RGBA")
+        relief = Image.open(Path(__file__).parent.parent / "./resources/maps/map_relief.png").convert("RGBA")
         relief = relief.resize(img.size)
 
         r, g, b, a = relief.split()
@@ -200,7 +202,7 @@ def auto_map(prompt, mode, map_, size_mod, optional_feature, model, font_path):
 
         result = Image.alpha_composite(img, relief)
 
-        borders = Image.open(r'./resources/maps/default_map.png').convert("RGBA")  # Second borders layer
+        borders = Image.open(Path(__file__).parent.parent / "./resources/maps/default_map.png").convert("RGBA")  # Second borders layer
         borders = borders.resize(result.size)
 
         borders = borders.filter(ImageFilter.GaussianBlur(radius=15))
@@ -223,6 +225,6 @@ def auto_map(prompt, mode, map_, size_mod, optional_feature, model, font_path):
     elif map_ == 'world':
         result = Image.alpha_composite(img, text_layer)
 
-    result.save(r"img.png")
+    result.save(Path(__file__).parent / "img.png")
     print("Map saved as img.png")
     result.show("Map")
