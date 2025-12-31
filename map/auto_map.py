@@ -61,10 +61,8 @@ def auto_map(prompt, mode, map_, size_mod, optional_feature, model, font_name):
     img = Image.open(path).convert("RGBA")
 
     text_layer = Image.new("RGBA", img.size, (255, 255, 255, 0))
- # Layer for most and least
-    most_least = Image.new("RGBA", img.size, (255, 255, 255, 0))
     draw = ImageDraw.Draw(text_layer)
-    ml_draw = ImageDraw.Draw(most_least)
+    
 # Requesting information from AI
     ai_answer = functions.ai_request(prompt, map_, model)
 
@@ -75,6 +73,8 @@ def auto_map(prompt, mode, map_, size_mod, optional_feature, model, font_name):
     print("Got information from AI")
 
     if optional_feature == "most_least":
+        most_least = Image.new("RGBA", img.size, (255, 255, 255, 0))
+        ml_draw = ImageDraw.Draw(most_least)
         '''Writing the most and the least country'''
         most_country = max(ai_answer, key=ai_answer.get)
         least_country = min(ai_answer, key=ai_answer.get)
