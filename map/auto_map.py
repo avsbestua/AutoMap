@@ -1,3 +1,18 @@
+# Copyright 2025-2026 Avsbest
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
 import sys
 
 if sys.platform == 'win32':
@@ -9,7 +24,7 @@ if sys.platform == 'win32':
     from tkinter.messagebox import askyesno, showwarning, showerror
     from pathlib import Path
 
-elif sys.platform == 'darwin':
+elif sys.platform == 'darwin':  #@TODO Make universal imports
     # macOS specific imports
     import random
     from PIL import Image, ImageDraw, ImageFont, ImageFilter
@@ -35,15 +50,6 @@ def auto_map(prompt, mode, map_, size_mod, optional_feature, model, font_name):
         showwarning("Warning", "Most/Least feature is not available for world map. It will be disabled.")
         optional_feature = None
 
-    # if most_least_flag and write_short_form_flag:
-    #     if askyesno("Warning", "Write in short form and most/least can`t be selected both. Press Yes to continue with short form and disable most/least, or No to continue with most/least and disable short form."):
-    #         most_least_flag = False
-    #         prompt += " Write in short form, for example 1000=1k, 1000000=1M etc."
-    #     else:
-    #         write_short_form_flag = False
-    # elif write_short_form_flag:
-    #     prompt += " Write in short form, for example 1000=1k, 1000000=1M etc."
-        
     random_colors = {}
                          
     print(f'Mode: {mode} Map: {map_} Model: {model}')
@@ -225,6 +231,6 @@ def auto_map(prompt, mode, map_, size_mod, optional_feature, model, font_name):
     elif map_ == 'world':
         result = Image.alpha_composite(img, text_layer)
 
-    result.save(Path(__file__).parent.parent / "img.png")
-    print("Map saved as img.png")
+    result.save(Path(__file__).parent.parent / "result.png")
+    print("Map saved as result.png")
     result.show("Map")
