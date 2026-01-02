@@ -1,4 +1,4 @@
-pillow
-requests
-customtkinter
-google-genai
+pillow>=12.0.0
+customtkinter>=5.2.2
+google-genai>=1.56.0
+dotenv>=0.9.9

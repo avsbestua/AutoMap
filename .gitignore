@@ -14,5 +14,7 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-result.png
+resources/demo/result.png
 *.txt
+
+!example.env

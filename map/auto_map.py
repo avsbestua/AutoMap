@@ -30,7 +30,7 @@ elif sys.platform == 'darwin':  #@TODO Make universal imports
     from PIL import Image, ImageDraw, ImageFont, ImageFilter
     from . import constants
     from . import functions
-    from tkinter.messagebox import showinfo, showwarning, showerror
+    from tkinter.messagebox import showwarning, showerror
     from pathlib import Path
 
 def auto_map(prompt, mode, map_, size_mod, optional_feature, model, font_name):

@@ -12,13 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
-
 import json
-import os
 from google import genai
 from tkinter.messagebox import showerror
-from pathlib import Path
+from dotenv import load_dotenv
+
+load_dotenv(".env") #loading .env file
 
 # Europe countries dictionary
 europe = """{
@@ -82,11 +81,6 @@ def ai_request(prompt: str, mode: str, AI_MODEL: str) -> dict:
         dict_ = europe
     elif mode == 'world':
         dict_ = world
-# reading token from file 
-    with open(Path(__file__).parent / "tk.txt", 'r') as file:
-        os.environ['GEMINI_API_KEY'] = file.read().strip()
-        
-    print(prompt)
 
 # request data
     prompt_to_ai = f"""Fill in a dictionary where the key """ + str(prompt) + f"""
