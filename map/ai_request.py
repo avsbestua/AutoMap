@@ -18,7 +18,7 @@ from tkinter.messagebox import showerror
 from dotenv import load_dotenv
 from google import genai
 
-import constants
+from . import constants
 
 load_dotenv(".env")  # loading .env file
 
