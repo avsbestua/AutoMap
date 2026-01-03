@@ -14,6 +14,11 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+resources/fonts/arialroundedmtbold.ttf
+resources/fonts/Bips.ttf
+resources/fonts/DIN Condensed.ttf
+resources/fonts/kodchasan.ttf
+
 resources/demo/result.png
 *.txt
 

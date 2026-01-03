@@ -52,6 +52,25 @@ To get started with **AutoMap**, follow these steps:
     - You can get `GEMINI_API_KEY` [here](https://aistudio.google.com/api-keys)
     - Open `.env` and replace the placeholder values with your actual API keys.
 
+## Fonts
+AutoMap has 4 default fonts. You can add your own fonts in `resources/fonts` and use them on maps.
+![fonts](resources/demo/fonts_gui.png)
+![fonts](resources/demo/fonts.png)
+
+## Filling
+You can define colors for data in `constants.py` file. Here 2 `dicts`. `filling_txt` defines filling in `Text` mode, for example if data is `Tea` color will be `(246, 255, 0, 255)` ***AutoMap uses RGBA. Last number must be 255.***
+`filling_num` defines filling in `Number` mode, for example `if data > 100 and data <= 200` color will be `(235, 40, 33, 255)`
+````python
+filling_txt = {
+    "Tea": (246, 255, 0, 255),
+    "Cofe": (54, 4, 4, 255),
+}
+
+filling_num = {
+    (100, 200): (235, 40, 33, 255),
+}
+````
+
 ## License
 
 ---
