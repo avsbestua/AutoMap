@@ -14,13 +14,22 @@
 
 import random
 from pathlib import Path
-from telnetlib import theNULL
 from tkinter.messagebox import showwarning, showerror
 
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
 from . import constants
 from .ai_request import ai_request
+
+def borders_procesing(image: Image.Image): #Function prepares borders to composing after ImageFilter.GaussianBlur()
+    pixels = image.load()
+    for x in range(image.width):
+        for y in range(image.height):
+            r, g, b, a = pixels[x, y]
+
+            if r != 0 and g != 0 and b != 0:
+                pixels[x, y] = (0, 0, 0, a if a == 0 else a + 30)
+
 
 def auto_map(prompt: str, mode: str, map_type: str, size_mod: str, optional_feature: str, model: str, font_name: str):
     # Most least and short form conflict solution @TODO Make most/least and short form compatible
@@ -89,7 +98,7 @@ def auto_map(prompt: str, mode: str, map_type: str, size_mod: str, optional_feat
                 color = (random.randint(80, 255), random.randint(80, 255), random.randint(80, 255), 255)
                 info = ai_answer[name]
                 for (low_lim, high_lim), color_tup in constants.filling_num.items():
-                    info = int(info)  # @FIXME number mode and short form don`t compatible
+                    info = int(info)
                     if low_lim <= info <= high_lim:
                         color = color_tup
                         break
@@ -218,13 +227,7 @@ def auto_map(prompt: str, mode: str, map_type: str, size_mod: str, optional_feat
 
         borders = borders.filter(ImageFilter.GaussianBlur(radius=15))
 
-        pixels = borders.load()
-        for x in range(borders.width):
-            for y in range(borders.height):
-                r, g, b, a = pixels[x, y]
-
-                if r != 0 and g != 0 and b != 0:
-                    pixels[x, y] = (0, 0, 0, a if a == 0 else a + 30)
+        borders_procesing(borders)
 
         result = Image.alpha_composite(result, borders)
         result = Image.alpha_composite(result, text_layer)
@@ -234,7 +237,15 @@ def auto_map(prompt: str, mode: str, map_type: str, size_mod: str, optional_feat
 
     # merging layers
     elif map_type == 'world':
-        result = Image.alpha_composite(img, text_layer)
+
+        borders = Image.open(Path(__file__).parent.parent / "./resources/maps/world_map.png").convert("RGBA")
+        borders = borders.filter(ImageFilter.GaussianBlur(radius=15))
+
+        borders_procesing(borders)
+
+        result = Image.alpha_composite(img, borders)
+        result = Image.alpha_composite(result, text_layer)
+
 
     result.save(Path(__file__).parent.parent / "result.png")
     print("Map saved as result.png")

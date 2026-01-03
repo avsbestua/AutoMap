@@ -68,7 +68,7 @@ class App(ctk.CTk):
         text_rd = ctk.CTkRadioButton(mode_frame, bg_color='#343434', text="Text", variable=mode_var, value="txt",
                                      font=("Arial Rounded MT Bold", 12), text_color="#FFFFFF")
         text_rd.pack(side='left', padx=8, pady=6)
-        # @TODO Check values in function.py
+
 
         number_rd = ctk.CTkRadioButton(mode_frame, bg_color='#343434', text="Number", variable=mode_var, value="num",
                                        font=("Arial Rounded MT Bold", 12), text_color="#FFFFFF")
