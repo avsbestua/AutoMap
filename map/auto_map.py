@@ -12,55 +12,45 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import random
+from PIL import Image, ImageDraw, ImageFont, ImageFilter
+from . import constants
+from . import functions
+from tkinter.messagebox import showwarning, showerror
+from pathlib import Path
 
-import sys
-
-if sys.platform == 'win32':
-    # Windows specific imports
-    import random
-    from PIL import Image, ImageDraw, ImageFont, ImageFilter
-    from . import constants
-    from . import functions
-    from tkinter.messagebox import askyesno, showwarning, showerror
-    from pathlib import Path
-
-elif sys.platform == 'darwin':  #@TODO Make universal imports
-    # macOS specific imports
-    import random
-    from PIL import Image, ImageDraw, ImageFont, ImageFilter
-    from . import constants
-    from . import functions
-    from tkinter.messagebox import showwarning, showerror
-    from pathlib import Path
-
-def auto_map(prompt, mode, map_, size_mod, optional_feature, model, font_name):
+def auto_map(prompt:str, mode:str, map_type:str, size_mod:str, optional_feature:str, model:str, font_name:str):
     #Most least and short form conflict solution @TODO Make most/least and short form compatible 
-    
-    if optional_feature == "short_form":
-        prompt += " Write in short form, for example 1000=1k, 1000000=1M etc."
-    
+
+
     if optional_feature == "short_form" and mode == "num":
         showwarning("Warning", "Short form feature is only available for text mode. It will be disabled.")
         optional_feature = None
 
     if optional_feature == "most_least" and mode == "text":
-        showwarning("Warning", "Most/least feature may be incompatible with text mode.")
+        showwarning("Warning", "Most/least feature may be incompatible with text mode. Turning off...")
+        optional_feature = None
 
-    if optional_feature == "most_least" and map_ == "world":
+    if optional_feature == "most_least" and map_type == "world":
         showwarning("Warning", "Most/Least feature is not available for world map. It will be disabled.")
         optional_feature = None
 
+
+    if optional_feature == "short_form":
+        prompt += " Write in short form, for example 1000=1k, 1000000=1M etc."
+
+
     random_colors = {}
                          
-    print(f'Mode: {mode} Map: {map_} Model: {model}')
+    print(f'Mode: {mode} Map: {map_type} Model: {model}')
 # map selecting
-    if map_ == "default":
+    if map_type == "default":
         path = Path(__file__).parent.parent / "./resources/maps/default_map.png"
         dict_ = constants.countries
-    elif map_ == 'flag':
+    elif map_type == 'flag':
         path = Path(__file__).parent.parent / "./resources/maps/flag_map.png"
         dict_ = constants.countries
-    elif map_ == 'world':
+    elif map_type == 'world':
         path = Path(__file__).parent.parent / "./resources/maps/world_map.png"
         dict_ = constants.world_coords
 # opening selected map
@@ -70,7 +60,7 @@ def auto_map(prompt, mode, map_, size_mod, optional_feature, model, font_name):
     draw = ImageDraw.Draw(text_layer)
     
 # Requesting information from AI
-    ai_answer = functions.ai_request(prompt, map_, model)
+    ai_answer = functions.ai_request(prompt, map_type, model)
 
     if ai_answer is None:
         showerror("Error", "No information or bad info received from AI")
@@ -99,7 +89,7 @@ def auto_map(prompt, mode, map_, size_mod, optional_feature, model, font_name):
                 color = (random.randint(80, 255), random.randint(80, 255), random.randint(80, 255), 255)
                 info = ai_answer[name]
                 for (low_lim, high_lim), color_tup in constants.filling_num.items():
-                    info = int(info)
+                    info = int(info) #@FIXME number mode and short form don`t compatible
                     if low_lim <= info <= high_lim:
                         color = color_tup
                         break
@@ -116,7 +106,7 @@ def auto_map(prompt, mode, map_, size_mod, optional_feature, model, font_name):
                 info = str(ai_answer[name])
                 color = constants.filling_txt[info]
             except Exception as e:
-                if map_ == 'default' or map_ == 'world':
+                if map_type == 'default' or map_type == 'world':
                     print(f"Color not found {info} {e}")
                     try:
                         color = random_colors[info]
@@ -125,7 +115,7 @@ def auto_map(prompt, mode, map_, size_mod, optional_feature, model, font_name):
                         color = (random.randint(80, 255), random.randint(80, 255), random.randint(80, 255), 255)
                         random_colors[info] = color
 # filling
-        if map_ == 'default' or map_ == 'world':
+        if map_type == 'default' or map_type == 'world':
             for coord in points:
                 ImageDraw.floodfill(img, xy=coord, value=color, thresh=50)
 
@@ -137,7 +127,7 @@ def auto_map(prompt, mode, map_, size_mod, optional_feature, model, font_name):
             print(f'No information for {name}')
             continue
 
-        if map_ == 'flag' or map_ == 'default':
+        if map_type == 'flag' or map_type == 'default':
             if len(info) >= 2:
                 x -= 30
             elif len(info) >= 4:
@@ -198,7 +188,7 @@ def auto_map(prompt, mode, map_, size_mod, optional_feature, model, font_name):
 
 
 # adding relief map
-    if map_ in ['default', 'flag']:
+    if map_type in ['default', 'flag']:
         relief = Image.open(Path(__file__).parent.parent / "./resources/maps/map_relief.png").convert("RGBA")
         relief = relief.resize(img.size)
 
@@ -224,11 +214,11 @@ def auto_map(prompt, mode, map_, size_mod, optional_feature, model, font_name):
         result = Image.alpha_composite(result, borders)
         result = Image.alpha_composite(result, text_layer)
 
-        if optional_feature == "most_least" and map_ != "world": # Adding most and least layer if flag is set
+        if optional_feature == "most_least" and map_type != "world": # Adding most and least layer if flag is set
             result = Image.alpha_composite(result, most_least)
 
 # merging layers
-    elif map_ == 'world':
+    elif map_type == 'world':
         result = Image.alpha_composite(img, text_layer)
 
     result.save(Path(__file__).parent.parent / "result.png")

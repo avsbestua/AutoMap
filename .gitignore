@@ -17,4 +17,5 @@ __pycache__/
 resources/demo/result.png
 *.txt
 
+result.png
 !example.env

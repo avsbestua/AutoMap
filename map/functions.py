@@ -76,7 +76,7 @@ world ="""{
     }"""
 
 # mode selecting
-def ai_request(prompt: str, mode: str, AI_MODEL: str) -> dict:
+def ai_request(prompt: str, mode: str, ai_model: str):
     if mode == 'default' or mode == 'flag':
         dict_ = europe
     elif mode == 'world':
@@ -98,7 +98,7 @@ def ai_request(prompt: str, mode: str, AI_MODEL: str) -> dict:
     client = genai.Client()
     try:
         request = client.models.generate_content(
-            model=AI_MODEL,
+            model=ai_model,
             contents=prompt_to_ai,
         )
 
@@ -112,9 +112,15 @@ def ai_request(prompt: str, mode: str, AI_MODEL: str) -> dict:
         country_dict = json.loads(json_style)
         return country_dict
     except json.JSONDecodeError:
-        showerror("Error", f"Failed to convert into dictionary. Result {json_style}")
-        print("Result:", json_style)
-        return None
+        try:
+            json_style = request.text.strip().replace("```python", "").replace("```", "").strip()
+            country_dict = json.loads(json_style)
+            return country_dict
+
+        except json.JSONDecodeError:
+            showerror("Error", f"Failed to convert into dictionary. Result {json_style}")
+            print("Result:", json_style)
+            return None
 
 
 

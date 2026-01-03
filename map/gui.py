@@ -13,25 +13,15 @@
 # limitations under the License.
 
 
-import sys
-
-if sys.platform == 'win32':
-    import threading
-    import customtkinter as ctk
-    from tkinter.messagebox import showinfo, showerror
-    from auto_map.map import auto_map
-    from PIL import Image, ImageTk
-    from pathlib import Path
-elif sys.platform == 'darwin':
-    import threading
-    import customtkinter as ctk
-    from tkinter.messagebox import showinfo, showerror
-    from . import auto_map
-    from PIL import Image, ImageTk
-    from pathlib import Path
+import threading
+import customtkinter as ctk
+from tkinter.messagebox import showinfo, showerror
+from . import auto_map
+from PIL import Image, ImageTk
+from pathlib import Path
 
 
-def map_(prompt, mode, map, size_mod, optional_feature, model, font_name):  # Create threading for function auto_map
+def map_(prompt: str, mode: str, map:str, size_mod:int, optional_feature:str, model:str, font_name:str):  # Create threading for function auto_map
     if not prompt.strip():
         showerror("Error", "Write prompt for AI")
         return
