@@ -49,6 +49,7 @@ To get started with **AutoMap**, follow these steps:
 4. **Environment Set up**
    The project uses a `.env` file for API keys.
     - Copy the template file:
+    - You can get `GEMINI_API_KEY` [here](https://aistudio.google.com/api-keys)
     - Open `.env` and replace the placeholder values with your actual API keys.
 
 ## License
