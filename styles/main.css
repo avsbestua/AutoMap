@@ -1,10 +1,90 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
 
 body{
 
-background: #ffe603;
-background: radial-gradient(circle,rgba(255, 230, 3, 1) 0%, rgba(255, 134, 20, 1) 50%, rgba(201, 237, 83, 1) 100%);
-
+    font-family: "Ubuntu", sans-serif;
+    background: linear-gradient(45deg, #b6e1ff 0%,#d6f0fd 100%);
+    color: #ffffff;
+    
 }
 
+p {
+    text-shadow: 1px 1px 1px #000000;
+    font-size: 2em;
+    margin: auto 10%;
+}
+
+button {
+    font-family: "Ubuntu", sans-serif;
+    width: 80%;
+}
+
+#title {
+    text-align: center;
+    font-size: 7em;
+    color: #ffffff;
+    text-shadow: 2px 2px 2px #000000;
+    margin-bottom: 0px;
+}
+
+#subtitle {
+    text-align: center;
+    margin-top: 0px;
+    font-size: 5em;
+    color: #ffffff;
+    text-shadow: 2px 2px 2px #000000;
+}
+
+#download-button {
+    display: block;
+    margin: 50px auto;
+    padding: 15px 30px;
+    font-size: 100px;
+    color: #ffffff;
+    background-color: #007BFF;
+    border: 6px solid #0056b3;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s ease;
+    
+}
+
+#readme-button {
+    display: block;
+    margin: 50px auto;
+    padding: 15px 30px;
+    font-size: 100px;
+    color: #ffffff;
+    background-color: #51ff00;
+    border: 6px solid #039f41;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s ease;
+}
+
+#develop-button {
+    display: block;
+    margin: 50px auto;
+    padding: 15px 30px;
+    font-size: 100px;
+    color: #ffffff;
+    background-color: #ff5100;
+    border: 6px solid #b32a00;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s ease;
+}
+
+footer p{
+    color: #ffffff;
+    font-size: 25px;
+    text-shadow: 1px 1px 1px #000000;
+    text-align: center;
+}
+
+a{
+    text-decoration: none;
+}
