@@ -57,8 +57,19 @@ AutoMap has 4 default fonts. You can add your own fonts in `resources/fonts` and
 ![fonts](resources/demo/fonts_gui.png)
 ![fonts](resources/demo/fonts.png)
 
-## Color filling
-You can define color for data range
+## Filling
+You can define colors for data in `constants.py` file. Here 2 `dicts`. `filling_txt` defines filling in `Text` mode, for example if data is `Tea` color will be `(246, 255, 0, 255)` ***AutoMap uses RGBA. Last number must be 255.***
+`filling_num` defines filling in `Number` mode, for example `if data > 100 and data <= 200` color will be `(235, 40, 33, 255)`
+````python
+filling_txt = {
+    "Tea": (246, 255, 0, 255),
+    "Cofe": (54, 4, 4, 255),
+}
+
+filling_num = {
+    (100, 200): (235, 40, 33, 255),
+}
+````
 
 ## License
 
