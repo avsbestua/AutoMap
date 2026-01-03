@@ -122,7 +122,7 @@ class App(ctk.CTk):
         ctk.CTkLabel(self, text="Select AI Model", font=("Arial Rounded MT Bold", 14), text_color='#000000').pack(
             pady=(6, 4))
 
-        ai_var = ctk.StringVar(value="gemma-3-27b-it")
+        ai_var = ctk.StringVar(value="gemini-2.5-flash")
 
         ai_model = ctk.CTkComboBox(self, width=220, height=26, font=("Arial Rounded MT Bold", 12), variable=ai_var,
                                    values=["gemma-3-27b-it", "gemini-2.5-flash", "gemini-2.5-flash-lite",

@@ -116,7 +116,7 @@ def auto_map(prompt: str, mode: str, map_type: str, size_mod: str, optional_feat
         # filling
         if map_type == 'default' or map_type == 'world':
             for coord in points:
-                ImageDraw.floodfill(img, xy=coord, value=color, thresh=50)
+                ImageDraw.floodfill(img, xy=coord, value=color, thresh=30)
 
         x, y = points[0]
 
