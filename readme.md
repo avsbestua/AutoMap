@@ -18,15 +18,16 @@
 
 ---
 There are libraries we are currently using:
+
 - AI
-   - [google-genai](https://github.com/googleapis/python-genai)
-- Drawing 
-   - [pillow](https://github.com/python-pillow/Pillow)
+    - [google-genai](https://github.com/googleapis/python-genai)
+- Drawing
+    - [pillow](https://github.com/python-pillow/Pillow)
 - GUI
-   - tkinter
-   - [customtkinter](https://github.com/TomSchimansky/CustomTkinter)
+    - tkinter
+    - [customtkinter](https://github.com/TomSchimansky/CustomTkinter)
 - Other
-   - [dotenv](https://github.com/theskumar/python-dotenv)
+    - [dotenv](https://github.com/theskumar/python-dotenv)
 
 ## Installation
 
@@ -46,11 +47,9 @@ To get started with **AutoMap**, follow these steps:
     ```bash
     pip install -r requirements.txt # On macOS and Linux can be pip3 install -r requirements.txt
 4. **Environment Set up**
-The project uses a `.env` file for API keys.
-   - Copy the template file:
-   - Open `.env` and replace the placeholder values with your actual API keys.
-    
-
+   The project uses a `.env` file for API keys.
+    - Copy the template file:
+    - Open `.env` and replace the placeholder values with your actual API keys.
 
 ## License
 

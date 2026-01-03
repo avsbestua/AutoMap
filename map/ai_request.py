@@ -13,76 +13,24 @@
 # limitations under the License.
 
 import json
-from google import genai
 from tkinter.messagebox import showerror
+
 from dotenv import load_dotenv
+from google import genai
 
-load_dotenv(".env") #loading .env file
+import constants
 
-# Europe countries dictionary
-europe = """{
+load_dotenv(".env")  # loading .env file
 
-        "ukraine":,
-        "poland":,
-        "moldova":,
-        "belarus":,
-        "russia":,
-        "lithuania":,
-        "latvia":,
-        "estonia":,
-        "finland":,
-        "norway":,
-        "sweden":,
-        "denmark":,
-        "germany":,
-        "czechia":,
-        "slovakia":,
-        "austria":,
-        "hungary":,
-        "switzerland":,
-        "slovenia":,
-        "romania":,
-        "bulgaria":,
-        "croatia":,
-        "bosnia_and_herzegovina":,
-        "montenegro":,
-        "north_macedonia":,
-        "kosovo":,
-        "albania":,
-        "greece":,
-        "turkey":,
-        "cyprus":,
-        "portugal":,
-        "spain":,
-        "italy":,
-        "france":,
-        "netherlands":,
-        "united_kingdom":,
-        "ireland":,
-        "iceland":,
-        "serbia":,
-        "belgium":,
-        "usa":
-    }"""
-# Continents dictionary
-world ="""{
-
-        "asia":,
-        "europe":,
-        "australia":,
-        "north_america":,
-        "south_america":,
-        "africa":
-    }"""
 
 # mode selecting
 def ai_request(prompt: str, mode: str, ai_model: str):
     if mode == 'default' or mode == 'flag':
-        dict_ = europe
+        dict_ = constants.europe
     elif mode == 'world':
-        dict_ = world
+        dict_ = constants.world
 
-# request data
+    # request data
     prompt_to_ai = f"""Fill in a dictionary where the key """ + str(prompt) + f"""
     Search the internet and return the result as JSON. Dont write 'json' in start
 
@@ -121,6 +69,3 @@ def ai_request(prompt: str, mode: str, ai_model: str):
             showerror("Error", f"Failed to convert into dictionary. Result {json_style}")
             print("Result:", json_style)
             return None
-
-
-
