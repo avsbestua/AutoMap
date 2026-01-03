@@ -174,9 +174,16 @@ def auto_map(prompt: str, mode: str, map_type: str, size_mod: str, optional_feat
                       stroke_fill=(0, 0, 0, 255))
 
 
-        else:
+        elif map_type == 'world': #tezt size for World map
 
-            size = 50
+            if name == "asia": size = 100
+            elif name == "africa": size = 150
+
+            else: size = 50
+
+
+
+
             size += size_mod  # Global size modifier fot other fonts. Main font is BIPS
 
             draw.text((x, y),
