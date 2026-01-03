@@ -52,6 +52,14 @@ To get started with **AutoMap**, follow these steps:
     - You can get `GEMINI_API_KEY` [here](https://aistudio.google.com/api-keys)
     - Open `.env` and replace the placeholder values with your actual API keys.
 
+## Fonts
+AutoMap has 4 default fonts. You can add your own fonts in `resources/fonts` and use them on maps.
+![fonts](resources/demo/fonts_gui.png)
+![fonts](resources/demo/fonts.png)
+
+## Color filling
+You can define color for data range
+
 ## License
 
 ---
