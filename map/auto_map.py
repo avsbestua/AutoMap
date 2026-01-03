@@ -14,6 +14,7 @@
 
 import random
 from pathlib import Path
+from telnetlib import theNULL
 from tkinter.messagebox import showwarning, showerror
 
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
@@ -116,7 +117,14 @@ def auto_map(prompt: str, mode: str, map_type: str, size_mod: str, optional_feat
         # filling
         if map_type == 'default' or map_type == 'world':
             for coord in points:
-                ImageDraw.floodfill(img, xy=coord, value=color, thresh=30)
+                if name == "south_America":
+                    thresh = 15
+                elif name == "asia":
+                    thresh = 20
+                else:
+                    thresh = 30
+
+                ImageDraw.floodfill(img, xy=coord, value=color, thresh=thresh)
 
         x, y = points[0]
 
@@ -176,12 +184,12 @@ def auto_map(prompt: str, mode: str, map_type: str, size_mod: str, optional_feat
 
         elif map_type == 'world': #tezt size for World map
 
-            if name == "asia": size = 100
-            elif name == "africa": size = 150
-
-            else: size = 50
-
-
+            if name == "asia": size = 200
+            elif name == "africa": size = 100
+            elif name == "europe": size = 110
+            elif name == "australia": size = 50
+            elif name == "south_America": size = 100
+            elif name == "north_America": size = 120
 
 
             size += size_mod  # Global size modifier fot other fonts. Main font is BIPS
