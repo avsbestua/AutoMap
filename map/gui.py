@@ -15,15 +15,17 @@
 
 import threading
 from pathlib import Path
-from tkinter.messagebox import showinfo, showerror
+from tkinter.messagebox import showinfo, showerror, showwarning
 
 import customtkinter as ctk
 from PIL import Image, ImageTk
 
 from . import auto_map
 
-def map_(prompt: str, mode: str, map: str, size_mod: int, optional_feature: str, model: str,
+def map_(self, prompt: str, mode: str, map: str, size_mod: int, optional_feature: str, model: str,
          font_name: str):  # Create threading for function auto_map
+    if self.is_creating:
+        showwarning("Running!", "AutoMap is running! Wait a few seconds...")
     if not prompt.strip():
         showerror("Error", "Write prompt for AI")
         return
@@ -35,7 +37,7 @@ def map_(prompt: str, mode: str, map: str, size_mod: int, optional_feature: str,
 class App(ctk.CTk):
     def __init__(self):
 
-        is_creating = False #Is AutoMap running
+        self.is_creating = False #Is AutoMap running
 
         super().__init__()
         self.title("AutoMap")
@@ -142,7 +144,7 @@ class App(ctk.CTk):
 
         run_button = ctk.CTkButton(self, text="Run AutoMap", font=("Arial Rounded MT Bold", 22), fg_color='#343434',
                                    border_width=3, border_color="#FFFFFF", width=280, height=70, corner_radius=16,
-                                   command=lambda: map_(prompt_entry.get(), mode_var.get(), map_var.get(),
+                                   command=lambda: map_(self, prompt_entry.get(), mode_var.get(), map_var.get(),
                                                         gsm_entry.get(), optional_feature_var.get(), ai_var.get(),
                                                         font_var.get()))
         run_button.pack(pady=(6, 10))
