@@ -13,7 +13,7 @@
 # limitations under the License.
 
 # Europe countries coordinates
-countries = {
+europe_coords = {
     "ukraine": [(3144, 2440), (3565, 2805)],
     "poland": [(2370, 2338)],
     "moldova": [(3100, 2740)],
@@ -128,11 +128,3 @@ world = """{
         "africa":
     }"""
 
-filling_txt = {
-    "Tea": (246, 255, 0, 255),
-    "Cofe": (54, 4, 4, 255),
-}
-
-filling_num = {
-    (100, 200): (235, 40, 33, 255),
-}

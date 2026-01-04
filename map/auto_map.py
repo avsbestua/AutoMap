@@ -12,19 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import json
 import random
 from pathlib import Path
 from tkinter.messagebox import showwarning, showerror
 
 from PIL import Image, ImageDraw, ImageFont
 
-from . import constants
-from .ai_request import ai_request
+from .constants import europe_coords, world_coords
+from .functions import ai_request, load_filling
 
 def auto_map(prompt: str, mode: str, map_type: str, size_mod: str, optional_feature: str, model: str, font_name: str):
 
-    _font_cache = {} #Dictionary with font sizes
-
+    _font_cache = {} #Dictionary with fonts
     def get_font():
 
         key = (font_name, size)
@@ -33,6 +33,9 @@ def auto_map(prompt: str, mode: str, map_type: str, size_mod: str, optional_feat
             font_path = Path("resources/fonts") / font_name
             _font_cache[key] = ImageFont.truetype(str(font_path), size)
         return _font_cache[key]
+
+    filling_txt, filling_num = load_filling() #Loading filling from JSON
+
 
     # Most least and short form conflict solution @TODO Make most/least and short form compatible
 
@@ -57,13 +60,13 @@ def auto_map(prompt: str, mode: str, map_type: str, size_mod: str, optional_feat
     # map selecting
     if map_type == "default":
         path = Path(__file__).parent.parent / "./resources/maps/default_map.png"
-        dict_ = constants.countries
+        dict_ = europe_coords
     elif map_type == 'flag':
         path = Path(__file__).parent.parent / "./resources/maps/flag_map.png"
-        dict_ = constants.countries
+        dict_ = europe_coords
     elif map_type == 'world':
         path = Path(__file__).parent.parent / "./resources/maps/world_map.png"
-        dict_ = constants.world_coords
+        dict_ = world_coords
     # opening selected map
     img = Image.open(path).convert("RGBA")
 
@@ -102,7 +105,7 @@ def auto_map(prompt: str, mode: str, map_type: str, size_mod: str, optional_feat
             try:
                 color = (random.randint(80, 255), random.randint(80, 255), random.randint(80, 255), 255)
                 info = ai_answer[name]
-                for (low_lim, high_lim), color_tup in constants.filling_num.items():
+                for (low_lim, high_lim), color_tup in filling_num.items():
                     info = int(info)
                     if low_lim <= info <= high_lim:
                         color = color_tup
@@ -118,7 +121,7 @@ def auto_map(prompt: str, mode: str, map_type: str, size_mod: str, optional_feat
             '''Text mode'''
             try:
                 info = str(ai_answer[name])
-                color = constants.filling_txt[info]
+                color = filling_txt[info]
             except Exception as e:
                 if map_type == 'default' or map_type == 'world':
                     print(f"Color not found {info} {e}")

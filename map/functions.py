@@ -17,11 +17,12 @@ from tkinter.messagebox import showerror
 
 from dotenv import load_dotenv
 from google import genai
+from pathlib import Path
 
 from . import constants
+from ast import literal_eval
 
 load_dotenv(".env")  # loading .env file
-
 
 # mode selecting
 def ai_request(prompt: str, mode: str, ai_model: str):
@@ -69,3 +70,33 @@ def ai_request(prompt: str, mode: str, ai_model: str):
             showerror("Error", f"Failed to convert into dictionary. Result {json_style}")
             print("Result:", json_style)
             return None
+
+
+def load_filling():
+
+    path = Path(__file__).parent / "filling.json"
+
+    filling_txt = {}
+    filling_num = {}
+
+    try:
+        with open(path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+
+
+        raw_txt = data.get("filling_txt", {})
+        filling_txt = {k: tuple(v) for k, v in raw_txt.items()}
+
+
+        raw_num = data.get("filling_num", {})
+        for key_str, color_list in raw_num.items():
+            try:
+                tuple_key = literal_eval(key_str)
+                filling_num[tuple_key] = tuple(color_list)
+            except (ValueError, SyntaxError):
+                print(f"Invalid JSON Key (see docs): {key_str}")
+
+    except Exception as e:
+        showerror("Error!", f"JSON reading error {e}")
+
+    return filling_txt, filling_num

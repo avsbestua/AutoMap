@@ -10,16 +10,22 @@ ENV/
 env.bak/
 venv.bak/
 
+dist/
+build/
+main.spec
+
 __pycache__/
 *.py[cod]
 *$py.class
 
-resources/fonts/arialroundedmtbold.ttf
-resources/fonts/Bips.ttf
-resources/fonts/DIN Condensed.ttf
-resources/fonts/kodchasan.ttf
+resources/fonts/*
 
-resources/demo/result.png
+!resources/fonts/arialroundedmtbold.ttf
+!resources/fonts/Bips.ttf
+!resources/fonts/DIN Condensed.ttf
+!resources/fonts/kodchasan.ttf
+
+map/filling.json
 *.txt
 
 result.png

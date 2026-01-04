@@ -47,10 +47,17 @@ To get started with **AutoMap**, follow these steps:
     ```bash
     pip install -r requirements.txt # On macOS and Linux can be pip3 install -r requirements.txt
 4. **Environment Set up**
-   The project uses a `.env` file for API keys.
+   The project uses a `.env` file for API keys. ***(Or use keyman.bat. if you downloaded release version)***
     - Copy the template file:
     - You can get `GEMINI_API_KEY` [here](https://aistudio.google.com/api-keys)
     - Open `.env` and replace the placeholder values with your actual API keys.
+5. **Creating filling configuration**
+    - Copy the `filling.template.json` file in `/map`
+6. **Run** 
+   ```bash
+   python main.py #Or python3 (macOS and Linux)
+   ```
+    - Now enjoy AutoMap    
 
 ## Fonts
 AutoMap has 4 default fonts. You can add your own fonts in `resources/fonts` and use them on maps.
@@ -58,16 +65,17 @@ AutoMap has 4 default fonts. You can add your own fonts in `resources/fonts` and
 ![fonts](resources/demo/fonts.png)
 
 ## Filling
-You can define colors for data in `constants.py` file. Here 2 `dicts`. `filling_txt` defines filling in `Text` mode, for example if data is `Tea` color will be `(246, 255, 0, 255)` ***AutoMap uses RGBA. Last number must be 255.***
+You can define colors for data in `filling.json` file. Here 2 `dicts`. `filling_txt` defines filling in `Text` mode, for example if data is `Tea` color will be `(246, 255, 0, 255)` ***AutoMap uses RGBA. Last number must be 255.***
 `filling_num` defines filling in `Number` mode, for example `if data > 100 and data <= 200` color will be `(235, 40, 33, 255)`
-````python
-filling_txt = {
-    "Tea": (246, 255, 0, 255),
-    "Cofe": (54, 4, 4, 255),
-}
-
-filling_num = {
-    (100, 200): (235, 40, 33, 255),
+````json
+{
+    "filling_txt": {
+        "Tea": [246, 255, 0, 255],
+        "Coffee": [54, 4, 4, 255]
+    },
+    "filling_num": {
+        "(100,200)": [235, 40, 33, 255]
+    }
 }
 ````
 
