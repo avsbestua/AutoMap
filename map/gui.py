@@ -22,7 +22,6 @@ from PIL import Image, ImageTk
 
 from . import auto_map
 
-
 def map_(prompt: str, mode: str, map: str, size_mod: int, optional_feature: str, model: str,
          font_name: str):  # Create threading for function auto_map
     if not prompt.strip():
@@ -35,6 +34,9 @@ def map_(prompt: str, mode: str, map: str, size_mod: int, optional_feature: str,
 
 class App(ctk.CTk):
     def __init__(self):
+
+        is_creating = False #Is AutoMap running
+
         super().__init__()
         self.title("AutoMap")
         self.geometry("480x630+650+60")

@@ -16,22 +16,24 @@ import random
 from pathlib import Path
 from tkinter.messagebox import showwarning, showerror
 
-from PIL import Image, ImageDraw, ImageFont, ImageFilter
+from PIL import Image, ImageDraw, ImageFont
 
 from . import constants
 from .ai_request import ai_request
 
-def borders_procesing(image: Image.Image): #Function prepares borders to composing after ImageFilter.GaussianBlur()
-    pixels = image.load()
-    for x in range(image.width):
-        for y in range(image.height):
-            r, g, b, a = pixels[x, y]
-
-            if r != 0 and g != 0 and b != 0:
-                pixels[x, y] = (0, 0, 0, a if a == 0 else a + 30)
-
-
 def auto_map(prompt: str, mode: str, map_type: str, size_mod: str, optional_feature: str, model: str, font_name: str):
+
+    _font_cache = {} #Dictionary with font sizes
+
+    def get_font():
+
+        key = (font_name, size)
+
+        if key not in _font_cache:
+            font_path = Path("resources/fonts") / font_name
+            _font_cache[key] = ImageFont.truetype(str(font_path), size)
+        return _font_cache[key]
+
     # Most least and short form conflict solution @TODO Make most/least and short form compatible
 
     if optional_feature == "short_form" and mode == "num":
@@ -65,6 +67,7 @@ def auto_map(prompt: str, mode: str, map_type: str, size_mod: str, optional_feat
     # opening selected map
     img = Image.open(path).convert("RGBA")
 
+
     text_layer = Image.new("RGBA", img.size, (255, 255, 255, 0))
     draw = ImageDraw.Draw(text_layer)
 
@@ -74,6 +77,8 @@ def auto_map(prompt: str, mode: str, map_type: str, size_mod: str, optional_feat
     if ai_answer is None:
         showerror("Error", "No information or bad info received from AI")
         return
+
+
 
     print("Got information from AI")
 
@@ -183,9 +188,11 @@ def auto_map(prompt: str, mode: str, map_type: str, size_mod: str, optional_feat
 
             size += size_mod  # Global size modifier fot other fonts. Main font is BIPS
 
+            font = get_font() #getting font from cache
+
             draw.text((x, y),
                       info,
-                      font=ImageFont.truetype(str(Path("resources/fonts") / font_name), size),
+                      font=font, #ImageFont.truetype(str(Path("resources/fonts") / font_name), size)
                       fill=(255, 255, 255, 255),
                       stroke_width=15,
                       stroke_fill=(0, 0, 0, 255))
@@ -221,13 +228,7 @@ def auto_map(prompt: str, mode: str, map_type: str, size_mod: str, optional_feat
 
         result = Image.alpha_composite(img, relief)
 
-        borders = Image.open(Path(__file__).parent.parent / "./resources/maps/default_map.png").convert(
-            "RGBA")  # Second borders layer
-        borders = borders.resize(result.size)
-
-        borders = borders.filter(ImageFilter.GaussianBlur(radius=15))
-
-        borders_procesing(borders)
+        borders = Image.open(Path(__file__).parent.parent / "./resources/maps/default_map_blured.png").convert("RGBA")  # Second borders layer
 
         result = Image.alpha_composite(result, borders)
         result = Image.alpha_composite(result, text_layer)
@@ -238,10 +239,7 @@ def auto_map(prompt: str, mode: str, map_type: str, size_mod: str, optional_feat
     # merging layers
     elif map_type == 'world':
 
-        borders = Image.open(Path(__file__).parent.parent / "./resources/maps/world_map.png").convert("RGBA")
-        borders = borders.filter(ImageFilter.GaussianBlur(radius=15))
-
-        borders_procesing(borders)
+        borders = Image.open(Path(__file__).parent.parent / "./resources/maps/world_map_blured.png").convert("RGBA")
 
         result = Image.alpha_composite(img, borders)
         result = Image.alpha_composite(result, text_layer)
